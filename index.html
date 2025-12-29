@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CKR Home</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="images/favicon.png" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+
+    <!-- Styles + JS -->
+    <link rel="stylesheet" href="css/style.css?v=161225-1" />
+    <script src="js/single.js?v=161225" defer></script>
+
+    <!-- Screenshot Helper -->
+    <script src="https://cdn.jsdelivr.net/npm/dom-to-image@2.6.0/dist/dom-to-image.min.js"></script>
+
+</head>
+
+<body class="page-index">
+    <div class="desktop-only">
+
+    <!-- ===========================
+         HEADER / NAVIGATION
+         =========================== -->
+    <header>
+        <nav>
+            <a href="/" class="logo-link">
+                <img src="images/logo.png" alt="CKR logo">
+            </a>
+        </nav>
+    </header>
+    <!-- End navigation -->
+
+
+    <main>
+
+        <!-- ===========================
+             HERO SECTION (input + CTA)
+             =========================== -->
+        <section class="hero-section">
+            
+            <div class="wrapper">
+
+                <!-- Heading -->
+                <h1>
+                <span class="normal">LLM </span>
+                <span class="colored">Query Explorer </span>
+                <span class="normal">for</span>
+                <span class="llm-logo-cycle">
+                    <img src="images/chatgpt_3d.png" alt="ChatGPT" class="llm-logo">
+                    <img src="images/gemini_3d.png" alt="Gemini" class="llm-logo">
+                    <img src="images/perplexity_3d.png" alt="Perplexity" class="llm-logo">
+                </span>
+                </h1>
+                <h2 class="subheader">
+                    See the fanout queries, cited sources, and more that ChatGPT, Gemini & Perplexity pull from the web to respond to a query;<br/> plus each query’s <u>Citation Score (CS)</u><sup>ⓘ</sup> — all powered by the <strong>Live web-search performed by LLMs</strong>.
+                </h2>
+
+                <!-- Mini Navigation -->
+                <div class="mini-nav">
+                    <span class="bulk-nav-link bulk-active" data-tooltip="You're already here">Single Query</span>
+                    <span class="nav-separator">|</span>
+                    <a href="/bulk.html" class="bulk-nav-link bulk-single">Bulk Queries ⤴</a>
+                </div>
+
+                <!-- Input Box + Error + Button + Trial Counter -->
+                <div class="single-input">
+
+                    <!-- Query Input -->
+                    <div class="query-box">
+                        <input 
+                            id="queryInput"
+                            type="text"
+                            placeholder="Type/paste a query as you would in ChatGPT.  E.g. trending christmas gift 2025 |  weather in paris today"
+                        />
+                    </div>
+
+                    <!-- Error Message -->
+                    <div id="inputError" class="input-error"></div>
+
+                    <!-- Analyze Button -->
+                    <button type="button" id="actionBtnTop" class="analyze-btn action-btn">
+                        Analyze Query
+                    </button>
+
+                </div>
+                <!-- End input section -->
+
+            </div>
+        </section>
+        <!-- End hero section -->
+
+
+
+        <!-- ============================================================
+     SINGLE QUERY RESULTS SECTION (QueryCat V3.0)
+     3-LLM comparison: ChatGPT, Gemini, Perplexity
+     ============================================================ -->
+<section id="singleResultsSection" class="results-section" style="display:none;">
+
+    <!-- Screenshot-only branding (hidden by default, shown during capture) -->
+    <div class="screenshot-branding">
+        <img src="images/logo-clean.png" alt="QueryCat logo" />
+        <p>
+            Generated on <b>QueryCat.app</b>. Powered by the web-search reasoning of <b>LLMs</b>. No guesswork!
+        </p>
+    </div>
+
+    <!-- ======  RESULTS WRAPPER ====== -->
+    <div class="results-wrapper screenshot-target" id="resultsContainer">
+
+        <!-- ======  RESULTS HEADER (Average CP) ====== -->
+        <div class="results-header">
+
+            <!-- LEFT: Average CCP % -->
+            <div class="header-ccp-left">
+                <span id="ccpPercent" class="ccp-percent">-- /100</span>
+            </div>
+
+            <!-- MIDDLE: Explanation -->
+            <div class="header-ccp-middle">
+                <div class="ccp-middle-top">
+                    Average <b>Citation Score (CS)</b> across the three LLMs for the query
+                </div>
+                <div class="ccp-middle-bottom" id="ccpQueryText">
+                    "your query will appear here"
+                </div>
+            </div>
+
+            <!-- RIGHT: Screenshot Button -->
+            <div class="header-ccp-right">
+                <button id="screenshotBtn" class="screenshot-btn">
+                    <img src="images/screenshot.svg" alt="screenshot icon">
+                </button>
+            </div>
+
+        </div>
+        <!-- End results header -->
+
+
+        <!-- ======  RESULTS GRID (3 rows × 3 columns) ====== -->
+        <div class="results-grid">
+             <!-- ======  LLM HEADERS (3 columns) ====== -->
+        <div class="llm-headers">
+
+            <div class="llm-header-label">
+                <!-- Empty cell above row labels -->
+            </div>
+
+            <div class="llm-header llm-header-chatgpt">
+                <img src="images/chatgpt_2d.png" alt="ChatGPT" class="llm-icon">
+                <span class="llm-name">ChatGPT (<span id="chatgptCCP">--%</span>)</span>
+            </div>
+
+            <div class="llm-header llm-header-gemini">
+                <img src="images/gemini_2d.png" alt="Gemini" class="llm-icon">
+                <span class="llm-name">Gemini (<span id="geminiCCP">--%</span>)</span>
+            </div>
+
+            <div class="llm-header llm-header-perplexity">
+                <img src="images/perplexity_2d.png" alt="Perplexity" class="llm-icon">
+                <span class="llm-name">Perplexity (<span id="perplexityCCP">--%</span>)</span>
+            </div>
+
+        </div>
+        <!-- End LLM headers -->
+
+            <!-- ROW 1 — FANOUT QUERIES -->
+            <div class="result-row">
+
+                <div class="result-label">
+                    Fanout<br>Queries<sup>ⓘ</sup>
+                </div>
+
+                <!-- ChatGPT Fanout -->
+                <div class="result-cell">
+                    <div class="result-cell-inner">
+                        <div class="result-list-wrapper">
+                            <ol id="chatgptFanoutList" class="result-list"></ol>
+                        </div>
+                        <div class="result-copy-wrapper">
+                            <button class="copy-btn" data-target="chatgptFanoutList">
+                                <img src="images/copy.svg" alt="copy">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gemini Fanout -->
+                <div class="result-cell">
+                    <div class="result-cell-inner">
+                        <div class="result-list-wrapper">
+                            <ol id="geminiFanoutList" class="result-list"></ol>
+                        </div>
+                        <div class="result-copy-wrapper">
+                            <button class="copy-btn" data-target="geminiFanoutList">
+                                <img src="images/copy.svg" alt="copy">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Perplexity Fanout -->
+                <div class="result-cell">
+                    <div class="result-cell-inner">
+                        <div class="result-list-wrapper">
+                            <ol id="perplexityFanoutList" class="result-list"></ol>
+                        </div>
+                        <div class="result-copy-wrapper">
+                            <button class="copy-btn" data-target="perplexityFanoutList">
+                                <img src="images/copy.svg" alt="copy">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- End Row 1 -->
+
+
+            <!-- ROW 2 — CITED SOURCES -->
+            <div class="result-row">
+
+                <div class="result-label">
+                    Cited<br>Sources<sup>ⓘ</sup>
+                </div>
+
+                <!-- ChatGPT Sources -->
+                <div class="result-cell">
+                    <div class="result-cell-inner">
+                        <div class="result-list-wrapper">
+                            <ol id="chatgptSourcesList" class="result-list"></ol>
+                        </div>
+                        <div class="result-copy-wrapper">
+                            <button class="copy-btn" data-target="chatgptSourcesList">
+                                <img src="images/copy.svg" alt="copy">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gemini Sources -->
+                <div class="result-cell">
+                    <div class="result-cell-inner">
+                        <div class="result-list-wrapper">
+                            <ol id="geminiSourcesList" class="result-list"></ol>
+                        </div>
+                        <div class="result-copy-wrapper">
+                            <button class="copy-btn" data-target="geminiSourcesList">
+                                <img src="images/copy.svg" alt="copy">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Perplexity Sources -->
+                <div class="result-cell">
+                    <div class="result-cell-inner">
+                        <div class="result-list-wrapper">
+                            <ol id="perplexitySourcesList" class="result-list"></ol>
+                        </div>
+                        <div class="result-copy-wrapper">
+                            <button class="copy-btn" data-target="perplexitySourcesList">
+                                <img src="images/copy.svg" alt="copy">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- End Row 2 -->
+
+
+            <!-- ROW 3 — SOURCE DIVERSITY -->
+            <div class="result-row">
+
+                <div class="result-label">
+                    Source<br>Diversity<sup>ⓘ</sup>
+                </div>
+
+                <!-- ChatGPT Diversity -->
+                <div class="result-cell">
+                    <div class="result-cell-inner">
+                        <div class="result-list-wrapper">
+                            <ol id="chatgptDiversityList" class="result-list"></ol>
+                        </div>
+                        <div class="result-copy-wrapper">
+                            <button class="copy-btn" data-target="chatgptDiversityList">
+                                <img src="images/copy.svg" alt="copy">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gemini Diversity -->
+                <div class="result-cell">
+                    <div class="result-cell-inner">
+                        <div class="result-list-wrapper">
+                            <ol id="geminiDiversityList" class="result-list"></ol>
+                        </div>
+                        <div class="result-copy-wrapper">
+                            <button class="copy-btn" data-target="geminiDiversityList">
+                                <img src="images/copy.svg" alt="copy">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Perplexity Diversity -->
+                <div class="result-cell">
+                    <div class="result-cell-inner">
+                        <div class="result-list-wrapper">
+                            <ol id="perplexityDiversityList" class="result-list"></ol>
+                        </div>
+                        <div class="result-copy-wrapper">
+                            <button class="copy-btn" data-target="perplexityDiversityList">
+                                <img src="images/copy.svg" alt="copy">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- End Row 3 -->
+
+        </div>
+        <!-- End results grid -->
+
+    </div>
+    <!-- End results wrapper -->
+
+
+    <!-- Screenshot-only legend (hidden by default) -->
+    <div class="screenshot-legend">
+        <p>
+            <b>Citation Score (CS)</b> is a directional metric based on cited sources. It helps compare queries to understand when LLMs are more likely to rely on external sources.<br>
+            This value is based on observed web-search behavior of LLMs; Not an official LLM metric.
+        </p>
+    </div>
+
+</section>
+<!-- End results section -->
+
+            <!-- ======   RESET BUTTON (NOT IN SCREENSHOT)  ====== -->
+
+            <div class="results-reset">
+                <button type="button" id="resetBtn" class="reset-btn" style="display: none;">
+                    Reset
+                </button>
+            </div>
+
+
+
+
+        <!-- ===========================
+             TUTORIAL SECTION
+             =========================== -->
+        <section class="tutorial-section">
+            <div class="wrapper">
+
+                <h2>How to Explore Queries in LLMs for AI SEO?</h2>
+
+                <div class="tutorial-content">
+
+                    <!-- Text bullets -->
+                    <div class="tutorial-left">
+
+                        <div class="bullet">
+                            <h3 class="pointer">1. Input</h3>
+                            <p class="description">Enter a query like your audience/customer would in an LLM. Click ‘Analyze Query’.</p>
+                        </div>
+
+                        <div class="bullet">
+                            <h3 class="pointer">2. Output</h3>
+                            <p class="description">Get fanout_queries, & citations that top LLMs web-search to answer that query. Live!</p>
+                        </div>
+
+                        <div class="bullet">
+                            <h3 class="pointer">3. Apply</h3>
+                            <p class="description">Use the insights of how LLMs answered that query to inform your AI SEO strategy.</p>
+                        </div>
+
+                    </div>
+
+                    <!-- Video -->
+                    <div class="tutorial-right">
+                        <div class="video-container">
+                            <iframe 
+                                src="https://www.youtube.com/embed/YhKVOknFU4k?&controls=1&modestbranding=1&rel=0"
+                                title="Tutorial for ChatGPT Keyword Explorer"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        <!-- End tutorial section -->
+
+
+
+        <!-- ===========================
+             FAQ SECTION
+             =========================== -->
+        <section class="faq-section">
+            <div class="wrapper">
+
+                <h2>FAQs on LLM Query Exploration for AI SEO</h2>
+
+                <div class="all-faqs">
+
+                    <details class="faq">
+                        <summary class="question">What is SEO for ChatGPT?</summary>
+                        <p class="answer">ChatGPT SEO involves optimizing content to rank in ChatGPT responses (earning citations and mentions) while also using the platform to complete SEO tasks.</p>
+                    </details>
+
+                    <details class="faq">
+                        <summary class="question">What is SEO for ChatGPT?</summary>
+                        <p class="answer">ChatGPT SEO involves optimizing content to rank in ChatGPT responses (earning citations and mentions) while also using the platform to complete SEO tasks.</p>
+                    </details>
+
+                    <details class="faq">
+                        <summary class="question">What is SEO for ChatGPT?</summary>
+                        <p class="answer">ChatGPT SEO involves optimizing content to rank in ChatGPT responses (earning citations and mentions) while also using the platform to complete SEO tasks.</p>
+                    </details>
+
+                </div>
+
+            </div>
+        </section>
+        <!-- End FAQ section -->
+
+    </main>
+    <!-- End main content -->
+
+
+
+    <!-- ===========================
+         FOOTER
+         =========================== -->
+    <footer>
+        <div class="footer-left footer-nav">
+            <a href="/">Single Query</a>
+            <a href="/bulk.html">Bulk Queries</a>
+        </div>
+
+        <div class="footer-center">
+            <a href="https://linkedin.com/in/mayankbishwas" target="_blank">
+                <img src="images/linkedin_white.svg" alt="LinkedIn" class="footer-linkedin">
+            </a>
+        </div>
+
+        <div class="footer-right">
+            <a href="https://imagealtai.com/" target="_blank" rel="noopener noreferrer">Image Alt AI</a>
+            <a href="/about.html">About</a>
+            <a href="mailto:mayankbishwas@gmail.com">Contact</a>
+        </div>
+    </footer>
+    <!-- End footer -->
+    </div>
+    <!-- End of desktop-only view -->
+
+
+    <!-- ===========================
+         MOBILE WARNING
+         =========================== -->
+    <div class="mobile-warning">
+        <div class="mobile-warning-box">
+            <h2>🖥️ Open on Desktop!</h2>
+            <p>Sorry, currently our web tool does not support mobile access; it works only on desktop.</p>
+            <p>But we're working on it, so do keep an eye out 🙂</p>
+            <p><u><em>P.S. Might work in landscape mode.</em></u></p>
+        </div>
+    </div>
+
+</body>
+</html>
