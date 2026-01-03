@@ -117,13 +117,13 @@ document.addEventListener("DOMContentLoaded", () => {
     hideResults();
 
     // Reset header
-    ccpPercentEl.innerHTML = "--<span class='percent-symbol'>%</span>";
+    ccpPercentEl.textContent = "--";
     ccpQueryTextEl.textContent = "\"your query will appear here\"";
 
     // Reset LLM CCPs
-    chatgptCCPEl.textContent = "--%";
-    geminiCCPEl.textContent = "--%";
-    perplexityCCPEl.textContent = "--%";
+    chatgptCCPEl.textContent = "--";
+    geminiCCPEl.textContent = "--";
+    perplexityCCPEl.textContent = "--";
 
     // Clear all lists
     clearList(chatgptFanoutList);
@@ -161,7 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Handle no-search state (answered from memory)
     if (llmData.needs_search === false) {
       const msg = llmData.message || "This LLM didn't perform web search for the said query.";
-      ccpEl.textContent = "0%";
+      ccpEl.textContent = "0";
       renderList(fanoutEl, [msg]);
       renderList(sourcesEl, [msg]);
       renderList(diversityEl, [msg]);
@@ -169,7 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Normal result
-  ccpEl.textContent = `${llmData.ccp}%`;
+  ccpEl.textContent = `${llmData.ccp}`;
 
   // Fanout queries
   const fanouts = llmData.fanout_queries || [];
@@ -229,10 +229,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Set average CCP
       if (data.average_ccp !== null) {
-        ccpPercentEl.innerHTML = `${data.average_ccp}<span class="percent-symbol">%</span>`;
-      } else {
-        ccpPercentEl.innerHTML = `--<span class="percent-symbol">%</span>`;
-      }
+          ccpPercentEl.textContent = `${data.average_ccp}`;
+        } else {
+          ccpPercentEl.textContent = "--";
+        }
 
       // Render ChatGPT results
       renderLLMResult(data.chatgpt, {

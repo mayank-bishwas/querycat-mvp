@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM Bulk Query Explorer: See What ChatGPT & Others Cite</title>
+
+        <meta name="description" content="Want LLM citation? See what top LLMs are citing for your target queries—to identify 'citable' content topics. Real data, No ai-visibility-tool tricks.">
+
+        <link rel="canonical" href="querycat.app/llm-bulk-query-explorer">
+
+        <!-- Open Graph -->
+        <meta property="og:title" content="LLM Bulk Query Explorer: See What ChatGPT & Others Cite">
+        <meta property="og:description" content="Want LLM citation? See what top LLMs are citing for your target queries—to identify 'citable' content topics. Real data, No ai-visibility-tool tricks.">
+        <meta property="og:url" content="https://querycat.app/llm-bulk-query-explorer">
+        <meta property="og:type" content="website">
+        <meta property="og:image" content="https://querycat.app/images/favicon.png">
+
+        <!-- Twitter Card -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="LLM Bulk Query Explorer: See What ChatGPT & Others Cite">
+        <meta name="twitter:description" content="LLM Bulk Query Explorer: See What ChatGPT & Others Cite">
+        <meta name="twitter:image" content="https://querycat.app/images/favicon.png">
+
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="images/favicon.png" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+
+    <!-- Styles + JS -->
+    <link rel="stylesheet" href="css/style.css?v=161225-1" />
+    <script src="js/bulk.js?v=161225" defer></script>
+</head>
+
+<body class="page-bulk">
+    <div class="desktop-only">
+
+    <!-- ===========================
+         HEADER / NAVIGATION
+         =========================== -->
+    <header>
+    <nav>
+        <a href="https://querycat.app" class="logo-link">
+            <img src="images/logo.png" alt="QueryCat logo">
+            <span class="brand-name">QueryCat.app</span>
+        </a>
+    </nav>
+</header>
+    <!-- End header -->
+
+
+    <main>
+
+        <!-- ===========================
+             HERO SECTION
+             =========================== -->
+        <section class="hero-section">
+            <div class="wrapper">
+
+                <!-- Heading -->
+                 <h1>
+                <span class="normal">LLM Bulk </span>
+                <span class="colored">Query Explorer </span>
+                <span class="normal">for</span>
+                <span class="llm-logo-cycle">
+                    <img src="images/chatgpt_3d.png" alt="ChatGPT" class="llm-logo">
+                    <img src="images/gemini_3d.png" alt="Gemini" class="llm-logo">
+                    <img src="images/perplexity_3d.png" alt="Perplexity" class="llm-logo">
+                </span>
+                </h1>
+
+                <h2 class="subheader">
+                    See and compare Live fanout queries and URLs that ChatGPT, Gemini & Perplexity refer to answer multiple queries;<br/> plus each query’s <u data-tooltip-neutral="Degree (0-100) to which an LLM relies on external sources to answer.">Citation Signal (CS)<sup>ⓘ</sup></u> — all to <strong>identify queries worth creating content around</strong>.
+                </h2>
+
+
+                <!-- Mini Navigation -->
+                <div class="mini-nav">
+                    <a href="https://querycat.app" class="bulk-nav-link bulk-single">Single Query ⤴</a>
+                    <span class="nav-separator">|</span>
+                    <span class="bulk-nav-link bulk-active" data-tooltip="You're already here">Bulk Queries</span>
+                </div>
+
+                <!-- ===========================
+                     BULK INPUT + STATES + CTA
+                     =========================== -->
+                <div class="bulk-input">
+
+                    <!-- Bulk Query Box -->
+                    <div class="bulk-query-box">
+
+                        <!-- State Wrapper -->
+                        <div class="bulk-input-wrapper state-default">
+
+                            <!-- Textarea -->
+                            <textarea
+                                id="bulkQueryInput"
+                                class="bulk-textarea"
+                                placeholder="Type/paste 2–5 related queries or seed keywords. Separate them by Enter ↵ like
+latest ai seo tool
+2026 llm query explorer
+chatgpt keyword best tools
+keyword research tool for llms
+free query analyzer for multiple llms"
+                                rows="6"
+                            ></textarea>
+
+                            <!-- Overlay -->
+                            <div class="bulk-overlay"></div>
+
+                            <!-- Status States -->
+                            <div class="bulk-status">
+
+                                <!-- Processing -->
+                                <div class="bulk-status-item status-processing">
+                                    <img src="images/bulk_process_cat.png" alt="Processing">
+                                    <p>Analyzing queries using LLMs' web-search reasoning...</p>
+                                    <p class="processing-time">(Takes ~15 sec/query)</p>
+                                </div>
+
+                                <!-- Done -->
+                                <div class="bulk-status-item status-done">
+                                    <img src="images/bulk_done_cat.png" alt="Done">
+                                    <p class="bulk-done">Done!</p>
+                                    <p>
+                                        Your results auto-downloaded.
+                                        Still, you can <a href="#" id="downloadAgain">download again</a>.
+                                    </p>
+                                </div>
+
+                                <!-- Error -->
+                                <div class="bulk-status-item status-error">
+                                    <img src="images/error_cat.png" alt="Error">
+                                    <p>Something went wrong. Please 'Reset' and try again.</p>
+                                </div>
+
+                            </div>
+                            <!-- End bulk-status -->
+
+                        </div>
+                        <!-- End bulk-input-wrapper -->
+                    </div>
+                    <!-- End bulk-query-box -->
+
+                    <!-- Inline Validation Error -->
+                    <div id="inputError" class="input-error"></div>
+
+                    <!-- Action Button -->
+                    <button type="button" id="actionBtnTop" class="analyze-btn action-btn">
+                        Analyze All Queries
+                    </button>
+
+                </div>
+                <!-- End bulk-input -->
+
+            </div>
+            <!-- End hero wrapper -->
+        </section>
+        <!-- End hero section -->
+
+
+        <!-- ===========================
+             TUTORIAL SECTION
+             =========================== -->
+        <section class="tutorial-section">
+            <div class="wrapper">
+
+                <h2>How to Explore Multiple Queries in LLMs for AI SEO?</h2>
+
+                <div class="tutorial-content">
+
+                    <!-- Left: Steps -->
+                    <div class="tutorial-left">
+
+                        <div class="bullet">
+                            <h3 class="pointer">1. Input</h3>
+                            <p class="description">
+                                Enter 2-5 queries like your audience/customer would in an LLM. Hit ‘Analyze Query’.
+                            </p>
+                        </div>
+
+                        <div class="bullet">
+                            <h3 class="pointer">2. Output</h3>
+                            <p class="description">
+                                Get fanout_queries, & citations that top LLMs web-search to answer each query. Live!
+                            </p>
+                        </div>
+
+                        <div class="bullet">
+                            <h3 class="pointer">3. Apply</h3>
+                            <p class="description">
+                                Use the insights of how LLMs answered those queries to inform your AI SEO strategy.
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <!-- Right: Video -->
+                    <div class="tutorial-right">
+                        <div class="video-container">
+                            <iframe
+                                src="https://www.youtube.com/embed/hfAC3lCPoDM?&controls=1&modestbranding=1&rel=0"
+                                title="Tutorial for QueryCat"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        <!-- End tutorial section -->
+
+
+        <!-- ===========================
+             FAQ SECTION
+             =========================== -->
+        <section class="faq-section">
+            <div class="wrapper">
+
+                <h2>FAQs on LLM Bulk Query Exploration</h2>
+
+                <div class="all-faqs">
+
+                    <details class="faq">
+                    <summary class="question">What is Bulk Query analysis in QueryCat.app?</summary>
+                    <p class="answer">
+                        Bulk Query analysis lets you analyze multiple queries in one run instead of checking them one by one. It shows how different queries trigger LLM behavior — web search, fan-out queries, cited sources — side by side.
+                        <br><br>
+                        It’s the same analysis as our <a href="https://querycat.app">Single Query</a>, just scaled (2-5 queries in a go) for comparison.
+                    </p>
+                    </details>
+
+                    <details class="faq">
+                    <summary class="question">Why would I analyze multiple queries at once instead of one by one?</summary>
+                    <p class="answer">
+                        Because patterns only show up in comparison. When you look at multiple queries together, you can quickly see:<br>
+                        • which queries trigger citations<br>
+                        • which don’t<br>
+                        • which ones rely on a single source<br>
+                        • which ones pull from diverse sources
+                        <br><br>
+                        Bulk mode saves time and gives context.
+                    </p>
+                    </details>
+
+                    <details class="faq">
+                    <summary class="question">How is Bulk Query different from Single Query mode?</summary>
+                    <p class="answer">
+                        <a href="https://querycat.app">Single Query</a> is for depth. Bulk Query is for breadth.
+                        <br><br>
+                        Single Query helps you understand one query in detail. Bulk Query helps you compare many queries and decide which ones are worth deeper exploration.
+                        <br><br>
+                        Same engine. Different lens.
+                    </p>
+                    </details>
+
+                    <details class="faq">
+                    <summary class="question">What kind of use cases is Bulk Query best suited for?</summary>
+                    <p class="answer">
+                        Bulk Query is useful when you’re:
+                        <br>
+                        • comparing topic ideas<br>
+                        • evaluating multiple keyword-like queries<br>
+                        • planning content clusters<br>
+                        • prioritizing which queries deserve attention
+                        <br><br>
+                        It’s especially handy for freelancers, startups, and teams working with limited time.
+                    </p>
+                    </details>
+
+                    <details class="faq">
+                    <summary class="question">How does QueryCat.app analyze multiple queries in Bulk mode?</summary>
+                    <p class="answer">
+                        Each query is analyzed independently, using the same logic as Single Query. The steps that QueryCat.app follows:<br>
+                        • sends each query to LLM APIs<br>
+                        • checks if web search was triggered<br>
+                        • captures cited sources and metadata<br>
+                        • computes Citation Signal per query
+                        <br><br>
+                        There’s no shortcutting. Bulk just batches the process.
+                    </p>
+                    </details>
+
+                    <details class="faq">
+                    <summary class="question">Which LLMs are analyzed in Bulk Query mode?</summary>
+                    <p class="answer">
+                        As of Dec ‘25, Bulk Query currently analyzes:
+                        <br>
+                        • ChatGPT - gpt-4.1-mini<br>
+                        • Gemini - 2.5 Flash<br>
+                        • Perplexity - Search tool_call that powers all their models
+                        <br><br>
+                        Each model is handled via its API (not chat UI) separately, so you can see how the same set of queries behaves across different LLMs.
+                    </p>
+                    </details>
+
+                    <details class="faq">
+                    <summary class="question">What metadata do I get for each query in Bulk analysis?</summary>
+                    <p class="answer">
+                        For every query ran, you’ll see:
+                        <br>
+                        • whether web search was triggered<br>
+                        • fan-out queries (direct or inferred)<br>
+                        • cited URLs<br>
+                        • source diversity<br>
+                        • Citation Signal
+                        <br><br>
+                        Across the three LLMs. You get the results in the CSV format.
+                    </p>
+                    </details>
+
+                    <details class="faq">
+                    <summary class="question">Does Bulk Query use real, live web search for every query?</summary>
+                    <p class="answer">
+                        Yes. Always.
+                        <br><br>
+                        Bulk Query uses live web search behavior from LLM APIs, not cached or simulated results.
+                        Each query is processed fresh, which means results can change over time — just like LLM behavior does.
+                    </p>
+                    </details>
+
+                    <details class="faq">
+                    <summary class="question">How should I interpret differences across queries in Bulk results?</summary>
+                    <p class="answer">
+                        Think comparatively, not absolutely. Bulk results help you see:
+                        <br>
+                        • which queries tend to trigger citations<br>
+                        • which ones rely on memory<br>
+                        • which ones pull from varied sources
+                        <br><br>
+                        It’s less about “good vs bad” and more about relative behavior. And by observing those behavior you can decide which of the queries signal a citable content opportunity.
+                    </p>
+                    </details>
+                    <details class="faq">
+                    <summary class="question">What is Citation Signal? How do we calculate it?</summary>
+                    <p class="answer">
+                        Citation Signal is a directional metric, not a prediction. It’s derived from observable LLM behavior, such as:
+                        <br>• how many unique sources were cited
+                        <br>• how diverse those sources were
+                        <br>• whether citations were dominated by a single source type
+                        <br><br>
+                        Here’s the exact logic used in the current version:
+                        <br>
+                        <em>
+                        // Base score from source diversity<br>
+                        let score = Math.min(uniqueUrls.length * 15, 60);<br><br>
+                        // Bonus for multiple source categories<br>
+                        if (categories.size >= 3) score += 20;<br>
+                        else if (categories.size >= 2) score += 10;<br><br>
+                        // Penalty for single-category dominance<br>
+                        const maxCategoryCount = Math.max(...Object.values(categoryCounts));<br>
+                        if (maxCategoryCount / uniqueUrls.length > 0.7) score -= 10;<br><br>
+                        // Cap at 100<br>
+                        score = Math.min(score, 100);
+                        </em>
+                        
+                        <br><br>
+                        The idea is simple: Out of multiple queries, the one that triggers more citations, from more varied sources, they are more likely to cite from multiple (and plausible different) sources another time.
+                    </p>
+                    </details>
+
+                    <details class="faq">
+                    <summary class="question">Is Citation Signal a prediction or a guarantee of citation?</summary>
+                    <p class="answer">
+                        No. And it’s important to say that clearly: Citation Signal is exactly what the name says—a signal, not a promise.
+                        <br><br>
+                        A few important clarifications:
+                        <br> • Citation Signal (CS) does not measure probability of being cited.
+                        <br>• A 100 CS does not guarantee a content on this topic will be cited.
+                    <br> • It’s meant for comparison and pattern spotting, not forecasting.
+
+                        <br><br>
+                        In short: it’s a signal you can observe and reason with — not a promise to rely on.
+                    </p>
+                    </details>
+
+                    <details class="faq">
+                    <summary class="question">What should I not assume from Bulk Query results?</summary>
+                    <p class="answer">
+                        We want to be clear that our Bulk Query result does NOT:
+                        <br>
+                        • guarantees of citation<br>
+                        • promise of future behavior<br>
+                        • direct cause-and-effect
+                        <br><br>
+                        LLMs are probabilistic systems. QueryCat.app shows what’s happening, not what will happen. And by knowing what’s happening, you can make an informed AI SEO strategy.
+                    </p>
+                    </details>
+
+                    <details class="faq">
+                    <summary class="question">How is QueryCat.app different from bulk AI visibility or tracking tools?</summary>
+                    <p class="answer">
+                        "Not astrology, but astronomy of AI SEO." – This tagline of ours captures the core difference.
+                        <br><br>
+                        Most bulk AI Visibility or LLM Tracking tools try to predict outcomes — they reduce complex LLM behavior into scores, rankings, or visibility forecasts, and ask you to trust the model behind them.
+                        <br><br>
+                        QueryCat.app understands that LLMs are probabilistic and sticks to what data it can tell irrefutably – directly from the LLMs themselves. Fanout Queries, cited sources. No prediction. No recommendation. Or promise results. (You can simply take our insight and ask ChatGPT to do that.)
+                        <br><br>
+                        By keeping the mechanics visible, QueryCat.app gives you an instrument, not a prophecy — and lets you interpret the signals, compare queries in bulk, and make informed decisions without black boxes in the way.
+                    </p>
+                    </details>
+
+                    <details class="faq">
+                    <summary class="question">Is Bulk Query free? Are there any limits?</summary>
+                    <p class="answer">
+                        Yes, Bulk Query is Free as of Dec ‘25.
+                        <br><br>
+                        We’re still in beta and gathering feedback. But it costs us for every query hit across each LLM, so expect a reasonable daily limit – and paid option for large queries – to be put up soon.
+                        <br><br>
+                        However, even then, the goal shall remain to keep QueryCat.app honest, useful, and affordable, not locked behind enterprise pricing.
+                        <br><br>
+                        So, use it, spread the word, and share your feedback 🙏
+                    </p>
+                    </details>
+
+                    <details class="faq">
+                    <summary class="question">Where can I request a Bulk Query feature or suggest a collaboration?</summary>
+                    <p class="answer">
+                        Firstly, you came all this way, so thanks for your interest: If you have feedback, a feature idea, or want to collaborate, you’re welcome to reach out.
+                        <br><br>
+                        Email: <a href="mailto:mayankbishwas@gmail.com">mayankbishwas@gmail.com</a>
+                        <br>
+                        Linkedin: <a href="https://linkedin.com/in/mayankbishwas" target="_blank">@mayankbishwas</a>
+                    </p>
+                    </details>
+
+
+                </div>
+
+            </div>
+        </section>
+        <!-- End FAQ section -->
+
+    </main>
+    <!-- End main -->
+
+
+    <!-- ===========================
+         FOOTER
+         =========================== -->
+    <footer>
+        <div class="footer-left footer-nav">
+            <span class="footer-brand">QueryCat.app</span>
+            <a href="https://querycat.app">Single Query</a>
+            <a href="https://querycat.app/llm-bulk-query-explorer">Bulk Queries</a>
+        </div>
+
+        <div class="footer-center">
+            <a href="https://linkedin.com/in/mayankbishwas" target="_blank">
+                <img src="images/linkedin_white.svg" alt="LinkedIn" class="footer-linkedin">
+            </a>
+        </div>
+
+        <div class="footer-right">
+            <a href="https://imagealtai.com/" target="_blank" rel="noopener noreferrer">Image Alt AI</a>
+            <a href="https://querycat.app/about-best-llm-query-explorer">About</a>
+            <a href="mailto:mayankbishwas@gmail.com">Contact</a>
+        </div>
+    </footer>
+    <!-- End footer -->
+
+    </div>
+    <!-- End of desktop-only view -->
+
+
+    <!-- ===========================
+         MOBILE WARNING
+         =========================== -->
+    <div class="mobile-warning">
+        <div class="mobile-warning-box">
+            <h2>🖥️ Open on Desktop!</h2>
+            <p>Sorry, currently our web tool does not support mobile access; it works only on desktop.</p>
+            <p>But we're working on it, so do keep an eye out 🙂</p>
+            <p><u><em>P.S. Might work in landscape mode.</em></u></p>
+        </div>
+    </div>
+
+</body>
+</html>

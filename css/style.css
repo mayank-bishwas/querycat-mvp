@@ -196,17 +196,17 @@ h2 {
     font-weight: 300;
     text-align: center;
     margin-bottom: 60px;
+
+     max-width: 860px;
+  margin: 0 auto 60px;
+  line-height: 1.5;
 }
 
 .hero-section h1 {
   margin-bottom: 8px;
+  transform: translateX(-30px)
 }
 
-.hero-section .subheader {
-  max-width: 860px;
-  margin: 0 auto 60px;
-  line-height: 1.5;
-}
 
 .subheader sup {
   font-size: 0.6em;     /* smaller than h2 */
@@ -214,6 +214,7 @@ h2 {
   position: relative;
   top: -0.2em;           /* push it slightly up */
 }
+
 
 
 
@@ -236,7 +237,30 @@ header {
     justify-content: center;  /* center the nav container horizontally */
 }
 
+/*  Header Brand Name  */
+.logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
 
+.brand-name {
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    background: linear-gradient(60deg, var(--whitish) 30%, var(--grey));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+
+    filter:
+    drop-shadow(0 0 60px rgba(254, 254, 254, 0.286))
+    drop-shadow(0 0 20px rgba(254, 254, 254, 0.286));
+    margin-left: -12px;
+    opacity: 0.9;
+
+    transform: translateY(6px);
+}
 
 nav {
     pointer-events: auto;     /* re-enable interactions inside */
@@ -330,6 +354,40 @@ nav {
   box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
 
+
+
+/* Generic tooltip */
+[data-tooltip-neutral] {
+    position: relative;
+    cursor: help;
+}
+
+[data-tooltip-neutral]::before {
+    content: attr(data-tooltip-neutral);
+    position: absolute;
+    top: -26px;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    background: rgba(255,255,255,0.95);
+    color: var(--blackish);
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 2px;
+    white-space: nowrap;
+    
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    z-index: 100;
+}
+
+[data-tooltip-neutral]:hover::before {
+    opacity: 1;
+    visibility: visible;
+}
 
 
 
@@ -448,6 +506,9 @@ nav {
     text-decoration: none;
 }
 
+a .try-btn {
+  text-decoration: none;
+}
 
 /* Button Hover State */
 .analyze-btn,
@@ -645,23 +706,13 @@ nav {
 }
 
 
-/* CCP Container */
+/* ==== CCP Container ==== */
 
 /* CCP Big number */
 .ccp-percent {
   font-size: 48px;
   font-weight: 500;
   line-height: 1;
-}
-
-/* CCP Smaller % */
-.percent-symbol {
-  font-size: 22px;
-  margin-left: 6px;
-  line-height: 1;
-
-  /* optical nudge */
-  transform: translateY(-2px);
 }
 
 
@@ -741,9 +792,10 @@ nav {
   justify-content: center;
   gap: 12px;
 
-  background: #f7f7f7;
+  background: #f2f2f2;
   border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.225), 0 0 0 1px rgba(0, 0, 0, 0.225);
+  border: 1px solid #d9d9d9;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
 }
 
 .llm-icon {
@@ -769,7 +821,7 @@ nav {
 .result-label {
   min-height: 60px;
 
-  background: #f7f7f7;
+  background: #f2f2f2;
   color: var(--blackish);
   font-weight: 400;
   font-size: 16px;
@@ -780,7 +832,8 @@ nav {
   text-align: center;
 
   border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.225), 0 0 0 1px rgba(0, 0, 0, 0.225);
+  border: 1px solid #d9d9d9;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
 }
 
 
@@ -804,6 +857,8 @@ nav {
 
   border-radius: 6px;
   padding: 12px;
+
+  border: 1px solid #d9d9d962;
 
   box-shadow: 0 2px 6px rgba(0,0,0,0.06);
 }
@@ -1296,6 +1351,85 @@ nav {
 }   
 
 
+/* ===== FAQ Tabs on Homepage (Not Bulk and About) ===== */
+
+/* ===== FAQ Tabs (Styled Buckets) ===== */
+
+.faq-tabs {
+  display: flex;
+  justify-content: space-between; /* start | center | end */
+  align-items: center;
+
+  max-width: 800px; /* same visual width as FAQs */
+  margin: 40px auto 32px;
+}
+
+.faq-tab {
+  width: 180px;
+  height: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(255,255,255,0.03);
+  border-radius: 6px;
+
+  font-family: "Source Sans 3", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+
+  color: rgba(224, 224, 224, 0.55);
+  cursor: pointer;
+
+  border: 1px solid rgba(255,255,255,0.15);
+
+  transition:
+    color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease,
+    border 0.25s ease;
+}
+
+/* Hover (inactive tabs) */
+.faq-tab:hover {
+  color: rgba(255,255,255,0.85);
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.35);
+}
+
+/* Active tab */
+.faq-tab.active {
+  background: var(--blackish);
+  color: #fff;
+
+  border: 1px solid var(--whitish);
+
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.15),
+    0 6px 18px rgba(0,0,0,0.6);
+}
+
+
+.faq-tab:hover {
+  opacity: 0.9;
+}
+
+
+/* ===== Buckets ===== */
+
+.faq-bucket {
+  display: none;
+}
+
+.faq-bucket.active {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+}
+
+
 
 /* =====================================
    Footer Section
@@ -1372,8 +1506,18 @@ nav {
 .footer-left {
     font-style: normal;   /* remove italics */
     display: flex;
-    gap: 40px;
+    align-items: center;
+    gap: 32px;
     white-space: nowrap;
+}
+
+/*  Footer Brand Name   */
+.footer-brand {
+    font-family: "Poppins", sans-serif;
+   
+    font-weight: 400;
+    color: var(--whitish);
+    margin-right: 20px;
 }
 
 /* Match link styling from right side */
@@ -1483,7 +1627,7 @@ footer::before {
 /* Decouple content from background */
 .page-bulk .hero-section {
   display: block;          /* ⬅ not flex */
-  padding-top: 80px;       /* controls content position */
+  padding-top: 120px;       /* controls content position */
 }
 
 .page-bulk .hero-section .wrapper {
@@ -1565,6 +1709,18 @@ footer::before {
   color: var(--blackish);
 
   background: transparent;
+
+  position: relative;
+  z-index: 2;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+
+
+.bulk-textarea::placeholder {
+  font-size: 14px;      /* placeholder text */
+  line-height: 1.6;
 }
 
 /* Bulk Area Placeholder */
@@ -1633,7 +1789,7 @@ footer::before {
   background: transparent;
 
   font-family: "Source Sans 3", sans-serif;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.5;
   color: var(--blackish);
 }
@@ -1641,7 +1797,7 @@ footer::before {
 
 /* Overlay (covers box, blocks input ONLY) */
 .bulk-overlay {
-  position: absolute;
+  
   inset: 0;
   background: #fff;
   z-index: 2;
@@ -2134,7 +2290,7 @@ footer::before {
   background: radial-gradient(
         circle at 50% 60%,
         rgba(192, 255, 58, 0.10) 5%,   /* soft yellow */
-        rgba(255, 255, 255, 0) 25%      /* fade to transparent */
+        rgba(255, 255, 255, 0) 25%);      /* fade to transparent */
 }
 
 
@@ -2162,3 +2318,169 @@ footer::before {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ==========================================================================
+==========================================================================
+
+                            404 PAGE STYLING
+
+==========================================================================
+========================================================================== */
+
+
+.page-404 .hero-section-404 {
+    text-align: center;
+    padding: 140px 20px 80px;
+    min-height: calc(100vh - 120px);
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: radial-gradient(
+        circle at 50% 50%,
+        rgba(192, 255, 58, 0.10) 5%,   /* soft yellow */
+        rgba(255, 255, 255, 0) 25%      /* fade to transparent */
+    );
+
+   
+}
+
+.page-404 .wrapper-404 {
+    max-width: 700px;
+    margin: 0 auto;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Heading (404!) */
+.page-404 #warning-404 {
+    font-family: "Poppins", sans-serif;
+    font-size: 56px;
+    font-weight: 600;
+    color: #e60000;
+    line-height: 1.2;
+    text-align: center;
+    margin: 0 0 10px 0;
+}
+
+/* Subheading */
+.page-404 #description-404 {
+    font-family: "Source Sans 3", sans-serif;
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--whitish);
+    text-align: center;
+    margin: 0 0 40px 0;
+    
+    /* Override the default h2 gradient */
+    background: none;
+    -webkit-background-clip: unset;
+    background-clip: unset;
+    opacity: 1;
+    filter: none;
+}
+
+/* Image */
+.page-404 .hero-section-404 img {
+    max-width: 350px;
+    height: auto;
+    object-fit: contain;
+    border-radius: 6px;
+    box-shadow: 0 4px 60px rgba(102, 102, 102, 0.3);
+    margin: 0 auto 40px auto;
+    display: block;
+
+    cursor: pointer;
+}
+
+/* Info text */
+.page-404 .info-description-404 {
+    font-family: "Source Sans 3", sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--whitish);
+    text-align: center;
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+/* 2. Comic link - green small font */
+.page-404 .comic {
+    font-size: 12px;
+    margin-top: 12px;
+    margin-bottom: 50px;
+}
+
+.page-404 .comic a {
+    color: var(--green);
+    text-decoration: none;
+}
+
+.page-404 .comic a:hover {
+    text-decoration: underline;
+}
+
+/* 4. Footer max height */
+.page-404 footer {
+    max-height: 54px;
+    height: 54px;
+}
+
+
+
+/* Mobile override for 404 */
+@media (max-width: 768px) {
+    .page-404 .hero-section-404,
+    .page-404 header,
+    .page-404 footer,
+    .page-404 .desktop-only {
+        display: none;
+    }
+    
+    .page-404 .mobile-warning {
+        display: flex;
+    }
+}

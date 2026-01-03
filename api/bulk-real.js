@@ -164,7 +164,7 @@ function formatLLMResult(result) {
   if (result.needs_search === false) {
     const noSearchMsg = "This LLM didn't perform web search for the said query.";
     return {
-      ccp: "0%",
+      ccp: "0",
       fanout: noSearchMsg,
       sources: noSearchMsg,
       diversity: noSearchMsg,
@@ -172,7 +172,7 @@ function formatLLMResult(result) {
   }
 
   return {
-    ccp: `${result.ccp}%`,
+    ccp: `${result.ccp}`,
     fanout: formatFanoutQueries(result.fanout_queries),
     sources: formatCitedSources(result.cited_sources),
     diversity: formatSourceDiversity(result.source_diversity),
@@ -344,9 +344,9 @@ export default async function handler(req, res) {
   csvLines.push([
     "",
     "Average",
-    avgChatGPT !== null ? `${avgChatGPT}%` : "N/A",
-    avgGemini !== null ? `${avgGemini}%` : "N/A",
-    avgPerplexity !== null ? `${avgPerplexity}%` : "N/A",
+    avgChatGPT !== null ? `${avgChatGPT}` : "N/A",
+    avgGemini !== null ? `${avgGemini}` : "N/A",
+    avgPerplexity !== null ? `${avgPerplexity}` : "N/A",
     "", "", "", "", "", "", "", "", "", ""
   ].map(csvEscape).join(","));
 
@@ -354,8 +354,8 @@ export default async function handler(req, res) {
   csvLines.push("");
 
   // Footer row 1: CP definition
-  const cpDefinition = `CS = Citation Score
-Shows to what degree LLMs rely on external sources for answers.
+  const cpDefinition = `CS = Citation Signal
+Shows to what degree an LLM relies on external sources for answer.
 *based on observed LLM behavior; Not an official LLM metric.`;
 
   csvLines.push([

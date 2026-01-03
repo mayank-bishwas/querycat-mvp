@@ -3,7 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CKR Home</title>
+    
+    <title>LLM Query Explorer: See What ChatGPT, Gemini & Perplexity Cite</title>
+
+        <meta name="description" content="Want LLM citation? See what top LLMs are citing for your target query—and make your own 'citable' content strategy. Real data, No ai-visibility-tool tricks.">
+
+        <link rel="canonical" href="https://querycat.app/">
+
+        <!-- Open Graph -->
+        <meta property="og:title" content="LLM Query Explorer: See What ChatGPT, Gemini & Perplexity Cite">
+        <meta property="og:description" content="Want LLM citation? See what top LLMs are citing for your target query—and make your own 'citable' content strategy. Real data, No ai-visibility-tool tricks.">
+        <meta property="og:url" content="https://querycat.app/">
+        <meta property="og:type" content="website">
+        <meta property="og:image" content="https://querycat.app/images/favicon.png">
+
+        <!-- Twitter Card -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="LLM Query Explorer: See What ChatGPT, Gemini & Perplexity Cite">
+        <meta name="twitter:description" content="LLM Query Explorer: See What ChatGPT, Gemini & Perplexity Cite">
+        <meta name="twitter:image" content="https://querycat.app/images/favicon.png">
+
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="images/favicon.png" />
@@ -17,6 +36,27 @@
     <link rel="stylesheet" href="css/style.css?v=161225-1" />
     <script src="js/single.js?v=161225" defer></script>
 
+    <!-- FAQ Helper (only for Homepage) -->
+     <script>
+        document.addEventListener("DOMContentLoaded", () => {
+        const tabs = document.querySelectorAll(".faq-tab");
+        const buckets = document.querySelectorAll(".faq-bucket");
+
+        tabs.forEach(tab => {
+            tab.addEventListener("click", () => {
+            tabs.forEach(t => t.classList.remove("active"));
+            buckets.forEach(b => b.classList.remove("active"));
+
+            tab.classList.add("active");
+            const target = document.getElementById(tab.dataset.tab);
+            if (target) target.classList.add("active");
+            });
+        });
+        });
+     </script>
+
+
+
     <!-- Screenshot Helper -->
     <script src="https://cdn.jsdelivr.net/npm/dom-to-image@2.6.0/dist/dom-to-image.min.js"></script>
 
@@ -29,12 +69,13 @@
          HEADER / NAVIGATION
          =========================== -->
     <header>
-        <nav>
-            <a href="/" class="logo-link">
-                <img src="images/logo.png" alt="CKR logo">
-            </a>
-        </nav>
-    </header>
+    <nav>
+        <a href="https://querycat.app" class="logo-link">
+            <img src="images/logo.png" alt="QueryCat logo">
+            <span class="brand-name">QueryCat.app</span>
+        </a>
+    </nav>
+</header>
     <!-- End navigation -->
 
 
@@ -59,14 +100,17 @@
                 </span>
                 </h1>
                 <h2 class="subheader">
-                    See the fanout queries, cited sources, and more that ChatGPT, Gemini & Perplexity pull from the web to respond to a query;<br/> plus each query’s <u>Citation Score (CS)</u><sup>ⓘ</sup> — all powered by the <strong>Live web-search performed by LLMs</strong>.
+                    Get Live fanout queries and URLs that ChatGPT, Gemini & Perplexity refer to answer a query;<br/> 
+                    plus <u data-tooltip-neutral="Degree (0-100) to which an LLM relies on external sources to answer.">Citation Signal (CS)<sup>ⓘ</sup></u> — all to <strong>identify queries worth creating content around</strong>.
                 </h2>
+
+
 
                 <!-- Mini Navigation -->
                 <div class="mini-nav">
                     <span class="bulk-nav-link bulk-active" data-tooltip="You're already here">Single Query</span>
                     <span class="nav-separator">|</span>
-                    <a href="/bulk.html" class="bulk-nav-link bulk-single">Bulk Queries ⤴</a>
+                    <a href="https://querycat.app/llm-bulk-query-explorer" class="bulk-nav-link bulk-single">Bulk Queries ⤴</a>
                 </div>
 
                 <!-- Input Box + Error + Button + Trial Counter -->
@@ -77,7 +121,7 @@
                         <input 
                             id="queryInput"
                             type="text"
-                            placeholder="Type/paste a query as you would in ChatGPT.  E.g. trending christmas gift 2025 |  weather in paris today"
+                            placeholder="Type/paste a query as you would in ChatGPT.  E.g. trending ai seo tool 2026 |  weather in paris today"
                         />
                     </div>
 
@@ -108,7 +152,7 @@
     <div class="screenshot-branding">
         <img src="images/logo-clean.png" alt="QueryCat logo" />
         <p>
-            Generated on <b>QueryCat.app</b>. Powered by the web-search reasoning of <b>LLMs</b>. No guesswork!
+            Generated on <b>QueryCat.app</b>. Powered by the Live web-search results of <b>LLMs</b>. 
         </p>
     </div>
 
@@ -126,7 +170,7 @@
             <!-- MIDDLE: Explanation -->
             <div class="header-ccp-middle">
                 <div class="ccp-middle-top">
-                    Average <b>Citation Score (CS)</b> across the three LLMs for the query
+                    Average <b>Citation Signal (CS)</b> across the three LLMs for the query
                 </div>
                 <div class="ccp-middle-bottom" id="ccpQueryText">
                     "your query will appear here"
@@ -155,17 +199,17 @@
 
             <div class="llm-header llm-header-chatgpt">
                 <img src="images/chatgpt_2d.png" alt="ChatGPT" class="llm-icon">
-                <span class="llm-name">ChatGPT (<span id="chatgptCCP">--%</span>)</span>
+                <span class="llm-name">ChatGPT (<span id="chatgptCCP">--</span>)</span>
             </div>
 
             <div class="llm-header llm-header-gemini">
                 <img src="images/gemini_2d.png" alt="Gemini" class="llm-icon">
-                <span class="llm-name">Gemini (<span id="geminiCCP">--%</span>)</span>
+                <span class="llm-name">Gemini (<span id="geminiCCP">--</span>)</span>
             </div>
 
             <div class="llm-header llm-header-perplexity">
                 <img src="images/perplexity_2d.png" alt="Perplexity" class="llm-icon">
-                <span class="llm-name">Perplexity (<span id="perplexityCCP">--%</span>)</span>
+                <span class="llm-name">Perplexity (<span id="perplexityCCP">--</span>)</span>
             </div>
 
         </div>
@@ -175,7 +219,7 @@
             <div class="result-row">
 
                 <div class="result-label">
-                    Fanout<br>Queries<sup>ⓘ</sup>
+                    Fanout<br>Queries
                 </div>
 
                 <!-- ChatGPT Fanout -->
@@ -228,7 +272,7 @@
             <div class="result-row">
 
                 <div class="result-label">
-                    Cited<br>Sources<sup>ⓘ</sup>
+                    Cited<br>Sources
                 </div>
 
                 <!-- ChatGPT Sources -->
@@ -281,7 +325,7 @@
             <div class="result-row">
 
                 <div class="result-label">
-                    Source<br>Diversity<sup>ⓘ</sup>
+                    Source<br>Diversity
                 </div>
 
                 <!-- ChatGPT Diversity -->
@@ -339,8 +383,7 @@
     <!-- Screenshot-only legend (hidden by default) -->
     <div class="screenshot-legend">
         <p>
-            <b>Citation Score (CS)</b> is a directional metric based on cited sources. It helps compare queries to understand when LLMs are more likely to rely on external sources.<br>
-            This value is based on observed web-search behavior of LLMs; Not an official LLM metric.
+           <b>Citation Signal (CS)</b> is the degree (0 - 100) to which an LLM answers a query from external sources. It's calculated from cited sources count, diversity & distribution. <br/> So, it's based on observed web-search behavior of LLMs; Not an official LLM metric.
         </p>
     </div>
 
@@ -392,8 +435,8 @@
                     <div class="tutorial-right">
                         <div class="video-container">
                             <iframe 
-                                src="https://www.youtube.com/embed/YhKVOknFU4k?&controls=1&modestbranding=1&rel=0"
-                                title="Tutorial for ChatGPT Keyword Explorer"
+                                src="https://www.youtube.com/embed/hfAC3lCPoDM?&controls=1&modestbranding=1&rel=0"
+                                title="Tutorial for QueryCat"
                                 frameborder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
                                 allowfullscreen>
@@ -409,35 +452,542 @@
 
 
         <!-- ===========================
-             FAQ SECTION
-             =========================== -->
-        <section class="faq-section">
+                FAQ SECTION (BUCKETED)
+                =========================== -->
+            <section class="faq-section">
             <div class="wrapper">
 
                 <h2>FAQs on LLM Query Exploration for AI SEO</h2>
 
-                <div class="all-faqs">
+                <!-- Buckets / Tabs -->
+                <div class="faq-tabs">
+                <button class="faq-tab active" data-tab="ai-seo">AI SEO</button>
+                <button class="faq-tab" data-tab="llm-query">LLM Query</button>
+                <button class="faq-tab" data-tab="querycat">QueryCat.app</button>
+                </div>
 
-                    <details class="faq">
-                        <summary class="question">What is SEO for ChatGPT?</summary>
-                        <p class="answer">ChatGPT SEO involves optimizing content to rank in ChatGPT responses (earning citations and mentions) while also using the platform to complete SEO tasks.</p>
+                <!-- Bucket 1 starts -->
+                <div class="all-faqs faq-bucket active" id="ai-seo">
+                <details class="faq">
+                    <summary class="question">What is AI SEO?</summary>
+                    <p class="answer">
+                        AI SEO is the practice of understanding how AI systems (like ChatGPT, Gemini, or Perplexity) find, interpret, and cite information from the web when answering user queries.
+                        <br><br>
+                        Interestingly, many SEO leaders believe, AI SEO is mostly just SEO best practices on steroids. Which we also believe to be true.
+                    </p>
                     </details>
 
                     <details class="faq">
-                        <summary class="question">What is SEO for ChatGPT?</summary>
-                        <p class="answer">ChatGPT SEO involves optimizing content to rank in ChatGPT responses (earning citations and mentions) while also using the platform to complete SEO tasks.</p>
+                    <summary class="question">How is AI SEO different from traditional SEO?</summary>
+                    <p class="answer">
+                        Traditional SEO focuses on search engines and result pages. AI SEO focuses on LLM answers and citations.
+                        <br><br>
+                        Now, since, search engines rank links, while LLMs synthesize answers (sometimes with citations, sometimes without) so, AI SEO is less about “getting ranked” and more about "getting cited".
+                    </p>
                     </details>
 
                     <details class="faq">
-                        <summary class="question">What is SEO for ChatGPT?</summary>
-                        <p class="answer">ChatGPT SEO involves optimizing content to rank in ChatGPT responses (earning citations and mentions) while also using the platform to complete SEO tasks.</p>
+                    <summary class="question">How do LLMs like ChatGPT and Gemini change how search works?</summary>
+                    <p class="answer">
+                        Instead of showing 10 blue links, LLMs:
+                        <br>• break a query into sub-queries
+                        <br>• search the web selectively
+                        <br>• pull from a handful of sources
+                        <br>• summarize the result
+                        <br><br>
+                        This means fewer sources get exposure, but those that do matter more.
+                    </p>
+                    </details>
+
+                    <details class="faq">
+                    <summary class="question">What is the difference between SEO, GEO, AEO and AIO?</summary>
+                    <p class="answer">
+                        Well, SEO stands for Search Engine Optimization. It's been there since... search engines (even before Google). And any effort to optimize for seach engines is the <a href ="https://www.canva.com/design/DAGloigdizc/JEchfER-VVak03seIrdYWg/edit?ui=eyJEIjp7IlQiOnsiQSI6IlBCc3ZHeU5ySjF3OVBzQjYifX19" target="_blank" rel="noopener noreferrer">art & science of SEO</a>.
+                        <br><br>
+                        However, since the inception of LLMs and GenAI like ChatGPT, Gemini, etc., there has emerged the practice of optimizing to show up there. And efforts in that regard are termed:
+                        <br>
+                        • GEO (Generative Engine Optimization): Optimize for generative engines like ChatGPT and Gemini
+                        <br>
+                        • AEO (Answer Engine Optimization): Optimize for answer engines like Perplexity
+                        <br><br>
+                        AIO is different. It stands for AI Overviews. It's a feature of Google – to show an AI-generated snippet of a query on its result page.
+                        <br><br>
+                        The AEO & GEO overlap to the point that they are used interchangeably. But, typically, GEO cares deeply about how LLMs source information.
+                    </p>
+                    </details>
+
+                    <details class="faq">
+                    <summary class="question">Is AI SEO about rankings, visibility, or citations?</summary>
+                    <p class="answer">
+                        Primarily citations and mentions. Because of the way LLMs (where you want to do AI SEO) work. If an LLM cites you, you’re visible by default.
+                        <br><br>
+                        That’s why tools like QueryCat.app focus on what LLMs actually cite.
+                    </p>
+                    </details>
+
+                    <details class="faq">
+                    <summary class="question">How do LLMs decide which sources to cite?</summary>
+                    <p class="answer">
+                        There’s no public rulebook. But patterns exist:
+                        <br>• authority
+                        <br>• clarity
+                        <br>• topical relevance
+                        <br>• diversity of sources
+                        <br>• freshness (sometimes)
+                        <br><br>
+                        QueryCat.app surfaces these patterns by showing fan-out queries and cited URLs — in both <a href="https://querycat.app">Single Query</a> and <a href="https://querycat.app/llm-bulk-query-explorer">Bulk Queries</a> modes.
+                    </p>
+                    </details>
+
+                    <details class="faq">
+                    <summary class="question">Do keywords still matter in AI SEO?</summary>
+                    <p class="answer">
+                        Yes — but differently. Keywords help LLMs:
+                        <br>• interpret intent
+                        <br>• expand into fan-out queries
+                        <br>• choose what to search for
+                        <br><br>
+                        AI SEO is less about exact matches and more about semantic coverage.
+                    </p>
+                    </details>
+
+                    <details class="faq">
+                    <summary class="question">What is AI keyword research, and how is it different?</summary>
+                    <p class="answer">
+                        Traditional keyword research asks: “What do people search for?”
+                        <br>
+                        AI keyword research asks: <em>“How does an LLM expand and explore this question?”</em>
+                        <br><br>
+                        QueryCat.app is built exactly for this — comparing how multiple queries trigger web search and citations.
+                    </p>
+                    </details>
+
+                    <details class="faq">
+                    <summary class="question">Why are citations becoming important in AI-driven search?</summary>
+                    <p class="answer">
+                        Because citations are the only transparent signal both users and brands can see. No SERP position. No impression count. Just: who got referenced.
+                        <br><br>
+                        That’s why AI SEO is drifting toward citation analysis.
+                    </p>
+                    </details>
+
+                    <details class="faq">
+                    <summary class="question">What are AI visibility tools?</summary>
+                    <p class="answer">
+                        AI visibility tools attempt to predict or score how visible a brand or page might be in AI answers; and recommend actionables for AI SEO.
+                        <br><br>
+                        They usually rely on:
+                        <br>• crawled content
+                        <br>• inferred prompts
+                        <br>• proprietary scoring models
+                    </p>
+                    </details>
+
+                    <details class="faq">
+                    <summary class="question">What are typical features of AI visibility tools?</summary>
+                    <p class="answer">
+                        Common features of AI visibility tools include:
+                        <br>• visibility scores
+                        <br>• brand mention tracking
+                        <br>• prompt simulations
+                        <br>• dashboards and trend lines
+                        <br><br>
+                        Most focus on outcomes. But, frankly, their methodologies are opaque. And claims based on in-house research.
+                    </p>
+                    </details>
+
+                    <details class="faq">
+                    <summary class="question">Why is AI SEO often expensive and opaque?</summary>
+                    <p class="answer">
+                        Because: LLM behavior isn’t deterministic
+                        <br><br>
+                        So, plausibly, AI SEO tools or vendors rely on black-box models making predictions based on huge sets of data. With large, talented teams. Tonnes of features. Then branding on top. It all adds up to ~$150 – $200/month as the starting price for AI SEO Tools in general.
+                    </p>
+                    </details>
+
+                    <details class="faq">
+                    <summary class="question">Is AI SEO reliable, or is it still experimental?</summary>
+                    <p class="answer">
+                        It’s early. And experimental. Some tools may claim reliability to different degrees. It’s better to be skeptical (not cynical, though) and dig deeper to learn of their methodologies.
+                        <br><br>
+                        By the way, that’s why GEO instrument-style tools (like QueryCat.app) have a place alongside prediction tools right now.
+                        Understand first. Optimize later.
+                    </p>
+                    </details>
+
+                    <details class="faq">
+                    <summary class="question">Can QueryCat.app help with AI SEO?</summary>
+                    <p class="answer">
+                        Yes — but in a very specific way. QueryCat.app doesn’t tell you what to do to get cited. Or, track your website, your pages, brand keyword/phrases, and the likes. Because, to be frank, the way things are changing in the SEO/GEO space, any such actionables could be obsolete before their results could be observed.
+                    
+                        <br><br>
+                        It takes a more ‘show, don’t tell’ approach based on real data provided by LLMs themselves:
+                        <br>• when they search
+                        <br>• what they search for
+                        <br>• what they cite
+                        <br><br>
+                        We do it in two modes: <a href="https://querycat.app">Single Query</a> and  <a href="https://querycat.app/llm-bulk-query-explorer">Bulk Queries</a>.
+                    </p>
                     </details>
 
                 </div>
+                <!-- Bucket 1 ends -->
+
+                <!-- Bucket 2 -->
+                <div class="all-faqs faq-bucket" id="llm-query">
+                <details class="faq">
+                    <summary class="question">What is an LLM query?</summary>
+                    <p class="answer">
+                        An LLM query is the question a user asks an AI system like ChatGPT, Gemini, or Perplexity. Also called the prompt. But internally, that single question often is broken down into multiple smaller queries; especially if a web search is required to answer it.
+                        <br><br>
+                        That internal process is what QueryCat.app helps you see.
+                    </p>
+                    </details>
+
+                    <details class="faq">
+                    <summary class="question">How is an LLM query different from a Google search query?</summary>
+                    <p class="answer">
+                        Firstly, people tend to write short (sometimes even single word) query on Google, but on LLMs, they tend to ask long queries in proper question format. Then, a Google query usually stays as-is when responding. An LLM query rarely does.
+                        <br><br>
+                        Instead, LLMs reinterpret, expand, and reformulate your question before answering it. That’s why two users asking “the same thing” may trigger different searches.
+                    </p>
+                    </details>
+
+                    <details class="faq">
+                    <summary class="question">What are fanout queries, exactly? Why do LLMs generate fan-out queries?</summary>
+                    <p class="answer">
+                        Fanout queries are the sub-queries that an LLM generates internally to answer a question properly. Because one long, multi-question query is often vague, incomplete, or ambiguous for LLMs to answer.
+                        <br><br>
+                        Think of them as: “If I had to answer this well, what else would I need to know?”
+                        <br><br>
+                        They’re not guesses. They’re like different angles to the same question.
+                    </p>
+                    </details>
+
+                    <details class="faq">
+                    <summary class="question">When do LLMs decide to use web search instead of memory?</summary>
+                    <p class="answer">
+                        LLMs do not always web search or cite sources. By default, they try to answer a query from their in-memory/training data.
+                        <br><br>
+                        However, they tend to make web searches when the model isn’t confident in its training data and:
+                        <br>• the topic is recent
+                        <br>• accuracy matters
+                        <br>• multiple viewpoints exist
+                    </p>
+                    </details>
+
+                    <details class="faq">
+                    <summary class="question">How does web search work inside LLMs?</summary>
+                    <p class="answer">
+                        Different LLMs make their web search differently. However, broadly they follow these steps:
+                        <br>1. The LLM interprets the query to see if it requires a web search. If not, they simply answer from memory, else, they go to step 2.
+                        <br>2. It generates fan-out queries
+                        <br>3. It performs targeted web searches
+                        <br>4. It selects and cites sources
+                        <br>5. It synthesizes an answer
+                        <br><br>
+                        Then this synthesized answer is presented to the user along with the links to cited sources.
+                    </p>
+                    </details>
+
+                    <details class="faq">
+                    <summary class="question">Why do different LLMs answer the same query differently?</summary>
+                    <p class="answer">
+                        Because they are tuned differently. Which is totally a decision of the LLM providers.
+                        <br><br>
+                        Broadly we can assume that they answer the same query differently because they:
+                        <br>• interpret intent differently
+                        <br>• generate different fan-out queries
+                        <br>• search different sources
+                        <br>• apply different citation thresholds
+                        <br><br>
+                        In fact, if you ask a query to one LLM twice, it’ll not only frame/write the answer differently, but also cite different sources.
+                        <br><br>
+                        That’s why QueryCat.app compares ChatGPT, Gemini, and Perplexity side by side to paint a bigger picture to explore LLM Query in detail.
+                    </p>
+                    </details>
+
+                    <details class="faq">
+                    <summary class="question">Do LLMs always cite sources when answering queries?</summary>
+                    <p class="answer">
+                        No. Not always. And, for AI SEO, it helps to know when and what query does NOT trigger LLMs to cite sources when answering as much as knowing otherwise.
+                        <br><br>
+                        Because, if it’s not citing, it’s answering from memory, and there is little to none that you can do to get brand mention. It’s only when they cite, that there’s an opportunity to be mentioned.
+                        <br><br>
+                        So, know the difference and focus on the one that can yield. And this is a feature of QueryCat.app.
+                    </p>
+                    </details>
+
+                    <details class="faq">
+                    <summary class="question">How stable is LLM query behavior over time?</summary>
+                    <p class="answer">
+                        Not very much. All LLM providers are constantly updating the memory of their models—both old and new.
+                        <br><br>
+                        So, you might experience variable behavior regarding LLM query over time.
+                    </p>
+                    </details>
+
+                    <details class="faq">
+                    <summary class="question">Can understanding LLM queries help with AI SEO or GEO?</summary>
+                    <p class="answer">
+                        Yes — but indirectly, and that distinction matters.
+                        <br><br>
+                        Understanding LLM queries helps you see how a model interprets intent, how it breaks a question down, and when it decides to search the web instead of relying on memory.
+                        <br><br>
+                        That insight can guide how you think about topics, coverage, and supporting content — without pretending there’s a guaranteed outcome.
+                    </p>
+                    </details>
+
+                    <details class="faq">
+                    <summary class="question">What parts of LLM query behavior are observable?</summary>
+                    <p class="answer">
+                        Honestly, not all. It differs for different LLMs. It even differs in what’s observable on chat UI and with the API of an LLM.
+                        <br><br>
+                        As of Dec ‘25, with ChatGPT and Perplexity API, you can observe:
+                        <br>• whether an LLM triggered web search
+                        <br>• which URLs it cited and their page title
+                        <br><br>
+                        In the case of Gemini API, you get fanout_queries upfront.
+                        <br><br>
+                        You CANNOT observe:
+                        <br>• internal model weights
+                        <br>• ranking formulas
+                        <br>• or how the same query might behave tomorrow
+                        <br><br>
+                        QueryCat.app is explicit about this boundary. It shows what’s observable, infers fanout_queries (reliably with SEO best practices), Source Diversity (with a simple heuristic), and calculates its own Citation Signal (which is based on the cited sources' count, diversity and distribution).
+                        <br><br>
+                        Most importantly, it chooses to stay quiet about what isn’t observable.
+                    </p>
+                    </details>
+
+                    <details class="faq">
+                    <summary class="question">How does QueryCat.app analyze LLM queries?</summary>
+                    <p class="answer">
+                        QueryCat.app runs real queries through real LLMs (their respective APIs, not chat interfaces) and captures what they show.
+                        <br><br>
+                        That includes: whether a web search was triggered, and what title + URL pair were referred to answer the query.
+                        <br><br>
+                        From that, it infers fanout_queries (for ChatGPT and Perplexity; Gemini provides it up front), Source Diversity (with a simple heuristic), and calculates its own Citation Signal (formula in QueryCat.app tab of FAQ).
+                        <br><br>
+                        In <a href="https://querycat.app">Single Query</a>, you explore one query in detail.
+                        <br>
+                        In <a href="https://querycat.app/llm-bulk-query-explorer">Bulk Queries</a>, you compare multiple queries side by side to spot patterns.
+                        <br><br>
+                        No simulations. No synthetic prompts. Just live observable behavior.
+                    </p>
+                    </details>
+
+                </div>
+                <!-- Bucket 2 ends -->
+
+                <!-- Bucket 3 -->
+                <div class="all-faqs faq-bucket" id="querycat">
+                <details class="faq">
+  <summary class="question">What is QueryCat.app, exactly?</summary>
+  <p class="answer">
+    QueryCat.app is a LLM Query Explorer.
+    <br><br>
+    It helps you see how large language models like ChatGPT, Gemini, and Perplexity actually answer a query — including when they search the web, what they search for, and which sources they cite.
+    <br><br>
+    Think of it as an AI SEO tool or instrument to look under the hood of LLMs. 
+  </p>
+</details>
+
+<details class="faq">
+  <summary class="question">“Not astrology, but the astronomy of AI SEO” —what’s up with this tagline?</summary>
+  <p class="answer">
+   Out tagline is both a statement to our users and a reminder to ourselves: understand AI SEO first, optimize later.
+    <br><br>
+    A lot of AI SEO today feels like astrology — bold predictions, vague scores, and confident claims without showing the underlying evidence. Astronomy, on the other hand, is about observation. You don’t predict stars by vibes; you study their movement with instruments.
+    <br><br>
+    QueryCat.app follows the same philosophy. Instead of guessing outcomes, it shows how LLMs actually search, expand queries, and cite sources. No prophecy — just observation.
+  </p>
+</details>
+
+<details class="faq">
+  <summary class="question">What does QueryCat.app show?</summary>
+  <p class="answer">
+    Most AI SEO tools try to guess visibility or predict performance. QueryCat.app takes a simpler route: show what’s happening instead of forecasting what might happen.
+    <br><br>
+    If you’re trying to understand:
+    <br>• why some sources get cited
+    <br>• when LLMs trigger web search
+    <br>• how query interpretation changes across models
+    <br><br>
+    …QueryCat.app gives you direct evidence.
+  </p>
+</details>
+
+<details class="faq">
+  <summary class="question">What does QueryCat.app NOT show?</summary>
+  <p class="answer">
+    By design, QueryCat.app does not:
+    <br>• predict brand rankings on LLMs
+    <br>• track prompts
+    <br>• lists prompt volume
+    <br>• estimate LLM traffic
+    <br>• guarantee citations
+    <br>• recommend optimizations
+    <br><br>
+    Those things require assumptions. QueryCat sticks to evidence. Like an astromer would.
+  </p>
+</details>
+
+<details class="faq">
+  <summary class="question">How does QueryCat.app come up with Fanout Queries and Source Diversity?</summary>
+  <p class="answer">
+    QueryCat.app runs real queries through real LLM APIs — not the chat interface — and captures what the models actually expose during the process.
+    <br><br>
+    Specifically, it looks at:
+    <br>• whether a web search was triggered
+    <br>• which title + URL pairs were referenced to answer the query
+    <br><br>
+    From there:
+    <br>• For Gemini, fan-out queries are often provided directly by the model.
+    <br>• For ChatGPT and Perplexity, fan-out queries are inferred based on the titles and URLs the model cited while answering.
+    <br><br>
+    Source Diversity is then calculated by grouping those cited URLs into broad categories (for example: blogs, news sites, brand pages, reference sources) using a simple heuristic.
+  </p>
+</details>
+
+<details class="faq">
+  <summary class="question">What is Citation Signal? How do we calculate it?</summary>
+  <p class="answer">
+    Citation Signal is a directional metric, not a prediction. It’s derived from observable LLM behavior, such as:
+    <br>• how many unique sources were cited
+    <br>• how diverse those sources were
+    <br>• whether citations were dominated by a single source type
+    <br><br>
+    Here’s the exact logic used in the current version:
+    <br><br>
+    <em>
+    // Base score from source diversity<br>
+    let score = Math.min(uniqueUrls.length * 15, 60);<br><br>
+    // Bonus for multiple source categories<br>
+    if (categories.size >= 3) score += 20;<br>
+    else if (categories.size >= 2) score += 10;<br><br>
+    // Penalty for single-category dominance<br>
+    const maxCategoryCount = Math.max(...Object.values(categoryCounts));<br>
+    if (maxCategoryCount / uniqueUrls.length > 0.7) score -= 10;<br><br>
+    // Cap at 100<br>
+    score = Math.min(score, 100);
+    </em>
+    
+    <br><br>
+    The idea is simple: Out of two queries, the one that triggers more citations, from more varied sources, they are more likely to cite from multiple (and plausible different) sources another time.
+  </p>
+</details>
+
+<details class="faq">
+  <summary class="question">Is Citation Signal a prediction or a guarantee of citation?</summary>
+  <p class="answer">
+    No. And it’s important to say that clearly: Citation Signal is exactly what the name says—a signal, not a promise.
+    <br><br>
+    A few important clarifications:
+    <br> • Citation Signal (CS) does not measure probability of being cited.
+    <br>• A 100 CS does not guarantee a content on this topic will be cited.
+   <br> • It’s meant for comparison and pattern spotting, not forecasting.
+
+    <br><br>
+    In short: it’s a signal you can observe and reason with — not a promise to rely on.
+  </p>
+</details>
+
+<details class="faq">
+  <summary class="question">Which LLMs does QueryCat.app currently support?</summary>
+  <p class="answer">
+    Right now, QueryCat.app supports three models:
+    <br>• ChatGPT - gpt-4.1-mini
+    <br>• Gemini - 2.5 Flash
+    <br>• Perplexity - Search tool_call that powers all their models
+    <br><br>
+    Each model is analyzed separately via its API (not chat interface), so you can see where they behave similarly — and where they don’t.
+  </p>
+</details>
+
+<details class="faq">
+  <summary class="question">What’s the difference between Single Query and Bulk Query modes?</summary>
+  <p class="answer">
+    <a href="https://querycat.app">Single Query</a> is for deep dives into one query.
+    <br>
+    <a href="https://querycat.app/llm-bulk-query-explorer">Bulk Queries</a> does the same but for 2-5 queries in-a-go.
+    <br><br>
+    The logic, and the models behind them both are the same. Just different use cases.
+  </p>
+</details>
+
+<details class="faq">
+  <summary class="question">Who should use QueryCat.app?</summary>
+  <p class="answer">
+    Anybody interested in building AI SEO (or GEO or AEO) strategy based on real, irrefutable data should use QueryCat.app.
+ 
+    That includes SEO freelancers, startup marketers, content strategists and even agencies exploring AI SEO or GEO.
+  </p>
+</details>
+
+<details class="faq">
+  <summary class="question">Do I need SEO or AI expertise to use QueryCat.app?</summary>
+  <p class="answer">
+    Not really. It’s designed as an intuitive, simple webapp.
+    <br><br>
+    If you understand how people ask questions and why sources matter, you are good to go.
+  </p>
+</details>
+
+<details class="faq">
+  <summary class="question">Is QueryCat.app free, and are there usage limits?</summary>
+  <p class="answer">
+    Free, No limits — as of Dec ‘25, in its beta version.
+    <br><br>
+    But it costs us for every hit across the three LLMs. Still, we plan to keep it like this for a month or so. During this period we shall gather feedback, refine the product – both the backend and frontend. So, kindly share and spread the word 🙏
+    <br><br>
+    Once we understand its demand and usage pattern, we plan to cap the daily limits and introduce paid plan.
+    <br><br>
+    But rest assured, it won’t be in like ~$200/month/seat deal. Cheaper by 1/10th or so because we aim to empower startups and freelancers looking for an affordable and reliable tool for AI SEO strategy.
+    <br><br>
+    The goal is to keep it honest, useful, and cheap — not locked behind enterprise pricing.
+  </p>
+</details>
+
+<details class="faq">
+  <summary class="question">Does QueryCat.app store my queries or results?</summary>
+  <p class="answer">
+    No. Queries are processed to generate results, then discarded. QueryCat.app does not build a database of user searches.
+    <br><br>
+    Later, when we introduce a paid option, we shall let users store data on their end. 
+    <br><br>
+    However, we do encourage users to share non-sensitive query screenshot, csv and experience to improve our product.
+  </p>
+</details>
+
+<details class="faq">
+  <summary class="question">What features or LLMs are planned next?</summary>
+  <p class="answer">
+    More models, better comparisons, and deeper query-level insights are on the roadmap.
+    <br><br>
+    However the underlying pillar will remain the same: honest, useful and cheap.
+  </p>
+</details>
+
+<details class="faq">
+  <summary class="question">Where can I request a feature or suggest a collaboration?</summary>
+  <p class="answer">
+    Firstly, you came all this way, so thanks for your interest: If you have feedback, a feature idea, or want to collaborate, you’re welcome to reach out.
+    <br><br>
+    Email: <a href="mailto:mayankbishwas@gmail.com">mayankbishwas@gmail.com</a>
+    <br>
+    Linkedin: <a href="https://linkedin.com/in/mayankbishwas" target="_blank">@mayankbishwas</a>
+
+  </p>
+</details>
+
+                </div>
+                <!-- Bucket 3 ends -->
 
             </div>
-        </section>
-        <!-- End FAQ section -->
+            </section>
+            <!-- End FAQ section -->
+
 
     </main>
     <!-- End main content -->
@@ -449,8 +999,9 @@
          =========================== -->
     <footer>
         <div class="footer-left footer-nav">
-            <a href="/">Single Query</a>
-            <a href="/bulk.html">Bulk Queries</a>
+            <span class="footer-brand">QueryCat.app</span>
+            <a href="https://querycat.app">Single Query</a>
+            <a href="https://querycat.app/llm-bulk-query-explorer">Bulk Queries</a>
         </div>
 
         <div class="footer-center">
@@ -461,7 +1012,7 @@
 
         <div class="footer-right">
             <a href="https://imagealtai.com/" target="_blank" rel="noopener noreferrer">Image Alt AI</a>
-            <a href="/about.html">About</a>
+            <a href="https://querycat.app/about-best-llm-query-explorer">About</a>
             <a href="mailto:mayankbishwas@gmail.com">Contact</a>
         </div>
     </footer>
