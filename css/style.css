@@ -2447,23 +2447,26 @@ footer::before {
     line-height: 1.6;
 }
 
-/* 2. Comic link - green small font */
-.page-404 .comic {
+/* Comic link - green small font - in 404 page and About page */
+.page-404 .comic,
+.page-about .comic {
     font-size: 12px;
     margin-top: 12px;
     margin-bottom: 50px;
 }
 
-.page-404 .comic a {
+.page-404 .comic a,
+.page-about .comic a {
     color: var(--green);
     text-decoration: none;
 }
 
-.page-404 .comic a:hover {
+.page-404 .comic a:hover,
+.page-about .comic a:hover {
     text-decoration: underline;
 }
 
-/* 4. Footer max height */
+/* Footer max height */
 .page-404 footer {
     max-height: 54px;
     height: 54px;
