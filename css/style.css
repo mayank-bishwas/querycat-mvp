@@ -2466,7 +2466,7 @@ footer::before {
     text-decoration: underline;
 }
 
-/* Footer max height */
+/* 4. Footer max height */
 .page-404 footer {
     max-height: 54px;
     height: 54px;
