@@ -44,6 +44,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let isResultShown = false;
 
+  // Responsive placeholder for mobile
+  function updatePlaceholder() {
+    if (window.innerWidth <= 768) {
+      queryInput.placeholder = "trending ai seo tool 2026 | weather in paris today";
+    } else {
+      queryInput.placeholder = "Type/paste a query  E.g. trending ai seo tool 2026 |  weather in paris today";
+    }
+  }
+  
+  updatePlaceholder();
+  window.addEventListener('resize', updatePlaceholder);
+
   /* =========================
      HELPERS
   ========================= */
@@ -106,6 +118,10 @@ document.addEventListener("DOMContentLoaded", () => {
     actionBtn.textContent = "Reset";
     actionBtn.disabled = false;
     resetBtn.style.display = "flex";
+
+    // Hide free notice in reset mode
+    const freeNotice = document.getElementById("freeNotice");
+    if (freeNotice) freeNotice.style.display = "none";
   }
 
   function resetUI() {
@@ -141,6 +157,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     resetBtn.style.display = "none";
     isResultShown = false;
+
+    resetBtn.style.display = "none";
+    isResultShown = false;
+    
+    // Show free notice again
+    const freeNotice = document.getElementById("freeNotice");
+    if (freeNotice) freeNotice.style.display = "block";
   }
 
   /* =========================
@@ -267,20 +290,53 @@ document.addEventListener("DOMContentLoaded", () => {
       setLoading(false);
     }
   }
-
-  /* =========================
+/* =========================
      SCREENSHOT
   ========================= */
   screenshotBtn.addEventListener("click", async () => {
+    const isMobile = window.innerWidth <= 768;
+    const scrollWrapper = document.querySelector('.results-grid-scroll-wrapper');
+    const resultsWrapper = document.querySelector('.results-wrapper');
+    const resultsGrid = document.querySelector('.results-grid');
+    
+    // Store original styles
+    const originalStyles = {
+      scrollWrapper: scrollWrapper ? scrollWrapper.getAttribute('style') : null,
+      resultsWrapper: resultsWrapper ? resultsWrapper.getAttribute('style') : null,
+      resultsSection: resultsSection.getAttribute('style'),
+      resultsGrid: resultsGrid ? resultsGrid.getAttribute('style') : null
+    };
+    
+    // Force desktop layout for screenshot
+    if (isMobile) {
+      if (scrollWrapper) {
+        scrollWrapper.style.cssText = 'overflow: visible !important; width: auto !important;';
+      }
+      
+      if (resultsGrid) {
+        // Force desktop grid: label column + 3 equal LLM columns
+        resultsGrid.style.cssText = 'display: grid !important; grid-template-columns: 150px repeat(3, 1fr) !important; gap: 16px !important; min-width: auto !important; width: 100% !important;';
+      }
+      
+      if (resultsWrapper) {
+        resultsWrapper.style.cssText = 'max-width: 1100px !important; width: 1100px !important; margin: 0 auto !important; padding: 24px !important;';
+      }
+      
+      resultsSection.style.cssText = 'width: 1200px !important; max-width: none !important; overflow: visible !important;';
+    }
+
     resultsSection.classList.add("screenshot-mode");
 
-    // Small delay to let styles apply
-    await new Promise(r => setTimeout(r, 50));
+    await new Promise(r => setTimeout(r, 200));
 
     try {
+      const captureWidth = isMobile ? 1200 : resultsSection.scrollWidth;
+      
       const dataUrl = await domtoimage.toPng(resultsSection, {
         bgcolor: "#121212",
-        scale: 2
+        scale: 2,
+        width: captureWidth,
+        height: resultsSection.scrollHeight
       });
       
       const link = document.createElement("a");
@@ -295,6 +351,36 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     resultsSection.classList.remove("screenshot-mode");
+    
+    // Restore original styles
+    if (isMobile) {
+      if (scrollWrapper) {
+        if (originalStyles.scrollWrapper) {
+          scrollWrapper.setAttribute('style', originalStyles.scrollWrapper);
+        } else {
+          scrollWrapper.removeAttribute('style');
+        }
+      }
+      if (resultsGrid) {
+        if (originalStyles.resultsGrid) {
+          resultsGrid.setAttribute('style', originalStyles.resultsGrid);
+        } else {
+          resultsGrid.removeAttribute('style');
+        }
+      }
+      if (resultsWrapper) {
+        if (originalStyles.resultsWrapper) {
+          resultsWrapper.setAttribute('style', originalStyles.resultsWrapper);
+        } else {
+          resultsWrapper.removeAttribute('style');
+        }
+      }
+      if (originalStyles.resultsSection) {
+        resultsSection.setAttribute('style', originalStyles.resultsSection);
+      } else {
+        resultsSection.removeAttribute('style');
+      }
+    }
   });
 
   function showToast(text) {

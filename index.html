@@ -15,7 +15,7 @@
         </script>
 
 
-    <title>LLM Query Explorer: See What ChatGPT, Gemini & Others Cite</title>
+         <title>LLM Query Explorer: See What ChatGPT, Gemini & Others Cite</title>
 
         <meta name="description" content="Want LLM citation? See what top LLMs are citing for your target query—to identify 'citable' content topics. Live data. No ai-visibility-tool tricks!">
 
@@ -47,8 +47,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
 
     <!-- Styles + JS -->
-    <link rel="stylesheet" href="css/style.css?v=03012026-1" />
-    <script src="js/single.js?v=03012026-1" defer></script>
+    <link rel="stylesheet" href="css/style.css?v=08012026-1" />
+    <script src="js/single.js?v=08012026-1" defer></script>
 
     <!-- FAQ Helper (only for Homepage) -->
      <script>
@@ -71,6 +71,7 @@
 
      <!-- Schema -->
       <script type="application/ld+json">
+
       {
         "@context": "https://schema.org",
         "@type": "WebSite",
@@ -89,8 +90,8 @@
 
 </head>
 
+
 <body class="page-index">
-    <div class="desktop-only">
 
     <!-- ===========================
          HEADER / NAVIGATION
@@ -115,20 +116,47 @@
             
             <div class="wrapper">
 
+                <!-- Tagline Pill -->
+                <div class="tagline-pill">
+                    <span>✦ Not astrology, but astronomy of AI SEO ✦</span>
+                </div>
+
                 <!-- Heading -->
                 <h1>
                 <span class="normal">LLM </span>
                 <span class="colored">Query Explorer </span>
-                <span class="normal">for</span>
-                <span class="llm-logo-cycle">
+                <!-- Desktop: animated logo cycle -->
+                <span class="normal desktop-only-inline">for</span>
+                <span class="llm-logo-cycle desktop-only-inline">
                     <img src="images/chatgpt_3d.png" alt="ChatGPT" class="llm-logo">
                     <img src="images/gemini_3d.png" alt="Gemini" class="llm-logo">
                     <img src="images/perplexity_3d.png" alt="Perplexity" class="llm-logo">
                 </span>
+                
+                <!-- Mobile: animated LLM names with icons -->
+                <span class="mobile-only h1-mobile-line2">
+                    <span class="h1-llm-item">
+                        <span class="h1-for-text">for</span>
+                        <span class="h1-llm-cycle">
+                            <span class="h1-llm-option">
+                                <img src="images/chatgpt_3d.png" alt="ChatGPT"> ChatGPT
+                            </span>
+                            <span class="h1-llm-option">
+                                <img src="images/gemini_3d.png" alt="Gemini"> Gemini
+                            </span>
+                            <span class="h1-llm-option h1-llm-perplexity">
+                                <img src="images/perplexity_3d.png" alt="Perplexity"> Perplexity
+                            </span>
+                        </span>
+                    </span>
+                </span>
                 </h1>
+
+
                 <h2 class="subheader">
-                    Get Live fanout queries and URLs that ChatGPT, Gemini & Perplexity refer to answer a query;<br/> 
-                    plus <u data-tooltip-neutral="Degree (0-100) to which an LLM relies on external sources to answer.">Citation Signal (CS)<sup>ⓘ</sup></u> — all to <strong>identify queries worth creating content around</strong>.
+                    <span class="subheader-line1">Get Live fanout queries and URLs that ChatGPT, Gemini & Perplexity</span>
+                    <span class="subheader-line2">cite to answer a query; plus <u data-tooltip-neutral="Degree (0-100) to which an LLM relies on external sources to answer.">Citation Signal (CS)<sup>ⓘ</sup></u> —</span>
+                    <span class="subheader-line3">to <strong>identify citable content topics</strong>.</span>
                 </h2>
 
 
@@ -148,7 +176,7 @@
                         <input 
                             id="queryInput"
                             type="text"
-                            placeholder="Type/paste a query as you would in ChatGPT.  E.g. trending ai seo tool 2026 |  weather in paris today"
+                            placeholder="Type/paste a query e.g. trending ai seo tool 2026 |  weather in paris today"
                         />
                     </div>
 
@@ -156,9 +184,13 @@
                     <div id="inputError" class="input-error"></div>
 
                     <!-- Analyze Button -->
+                    <!-- Analyze Button -->
                     <button type="button" id="actionBtnTop" class="analyze-btn action-btn">
                         Analyze Query
                     </button>
+
+                    <!-- Free notice (hidden when in Reset mode) -->
+                    <p class="free-notice" id="freeNotice"><em>*Free. No sign-up.</em></p>
 
                 </div>
                 <!-- End input section -->
@@ -196,12 +228,12 @@
 
             <!-- MIDDLE: Explanation -->
             <div class="header-ccp-middle">
-                <div class="ccp-middle-top">
+                <span class="ccp-middle-top">
                     Average <b>Citation Signal (CS)</b> across the three LLMs for the query
-                </div>
-                <div class="ccp-middle-bottom" id="ccpQueryText">
+                </span>
+                <span class="ccp-middle-bottom" id="ccpQueryText">
                     "your query will appear here"
-                </div>
+                </span>
             </div>
 
             <!-- RIGHT: Screenshot Button -->
@@ -216,6 +248,8 @@
 
 
         <!-- ======  RESULTS GRID (3 rows × 3 columns) ====== -->
+        <!-- Scroll wrapper for mobile horizontal scrolling -->
+        <div class="results-grid-scroll-wrapper">
         <div class="results-grid">
              <!-- ======  LLM HEADERS (3 columns) ====== -->
         <div class="llm-headers">
@@ -235,7 +269,7 @@
             </div>
 
             <div class="llm-header llm-header-perplexity">
-                <img src="images/perplexity_2d.png" alt="Perplexity" class="llm-icon">
+                <img src="images/perplexity_2d.png" alt="Perplexity" class="llm-icon perplexity">
                 <span class="llm-name">Perplexity (<span id="perplexityCCP">--</span>)</span>
             </div>
 
@@ -402,6 +436,8 @@
 
         </div>
         <!-- End results grid -->
+        </div>
+        <!-- End results grid scroll wrapper -->
 
     </div>
     <!-- End results wrapper -->
@@ -1026,7 +1062,7 @@
          =========================== -->
     <footer>
         <div class="footer-left footer-nav">
-            <span class="footer-brand">QueryCat.app</span>
+            <a href="/" class="footer-brand"><b>QueryCat.app</b></a>
             <a href="/">Single Query</a>
             <a href="/llm-bulk-query-explorer">Bulk Queries</a>
         </div>
@@ -1044,21 +1080,9 @@
         </div>
     </footer>
     <!-- End footer -->
-    </div>
-    <!-- End of desktop-only view -->
 
-
-    <!-- ===========================
-         MOBILE WARNING
-         =========================== -->
-    <div class="mobile-warning">
-        <div class="mobile-warning-box">
-            <h2>🖥️ Open on Desktop!</h2>
-            <p>Sorry, currently our web tool does not support mobile access; it works only on desktop.</p>
-            <p>But we're working on it, so do keep an eye out 🙂</p>
-            <p><u><em>P.S. Might work in landscape mode.</em></u></p>
-        </div>
-    </div>
-
+    <!-- Zoho chatbot begins -->
+    <script>window.$zoho=window.$zoho || {};$zoho.salesiq=$zoho.salesiq||{ready:function(){}}</script><script id="zsiqscript" src="https://salesiq.zohopublic.in/widget?wc=siq66ccbf0efeebf39cf591d4d29b641adf40be468ecd1114a67830482e30a85695" defer></script>
+    <!-- Zoho chatbot ends -->
 </body>
 </html>

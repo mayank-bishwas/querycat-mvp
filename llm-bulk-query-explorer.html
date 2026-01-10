@@ -20,7 +20,8 @@
         <link rel="canonical" href="https://querycat.app/llm-bulk-query-explorer">
 
         <!-- Schema -->
-      <script type="application/ld+json">
+         <script type="application/ld+json">
+
       {
         "@context": "https://schema.org",
         "@type": "WebSite",
@@ -30,6 +31,7 @@
         "description": "LLM Query Explorer to see what ChatGPT, Gemini, and Perplexity search and cite to answer a query."
         }
         </script>
+
 
         <!-- Open Graph -->
         <meta property="og:title" content="LLM Bulk Query Explorer: See What ChatGPT & Others Cite">
@@ -57,12 +59,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
 
     <!-- Styles + JS -->
-    <link rel="stylesheet" href="css/style.css?v=03012026-1" />
-    <script src="js/bulk.js?v=03012026-1" defer></script>
+    <link rel="stylesheet" href="css/style.css?v=08012026-1" />
+    <script src="js/bulk.js?v=08012026-1" defer></script>
 </head>
 
 <body class="page-bulk">
-    <div class="desktop-only">
 
     <!-- ===========================
          HEADER / NAVIGATION
@@ -86,20 +87,45 @@
         <section class="hero-section">
             <div class="wrapper">
 
+                <!-- Tagline Pill -->
+                <div class="tagline-pill">
+                    <span>✦ Not astrology; but astronomy of AI SEO ✦</span>
+                </div>
+
                 <!-- Heading -->
                  <h1>
                 <span class="normal">LLM Bulk </span>
                 <span class="colored">Query Explorer </span>
-                <span class="normal">for</span>
-                <span class="llm-logo-cycle">
+                <!-- Desktop: animated logo cycle -->
+                <span class="normal desktop-only-inline">for</span>
+                <span class="llm-logo-cycle desktop-only-inline">
                     <img src="images/chatgpt_3d.png" alt="ChatGPT" class="llm-logo">
                     <img src="images/gemini_3d.png" alt="Gemini" class="llm-logo">
                     <img src="images/perplexity_3d.png" alt="Perplexity" class="llm-logo">
                 </span>
+                <!-- Mobile: animated LLM names with icons -->
+                <span class="mobile-only h1-mobile-line2">
+                    <span class="h1-llm-item">
+                        <span class="h1-for-text">for</span>
+                        <span class="h1-llm-cycle">
+                            <span class="h1-llm-option">
+                                <img src="images/chatgpt_3d.png" alt="ChatGPT"> ChatGPT
+                            </span>
+                            <span class="h1-llm-option">
+                                <img src="images/gemini_3d.png" alt="Gemini"> Gemini
+                            </span>
+                            <span class="h1-llm-option h1-llm-perplexity">
+                                <img src="images/perplexity_3d.png" alt="Perplexity"> Perplexity
+                            </span>
+                        </span>
+                    </span>
+                </span>
                 </h1>
 
                 <h2 class="subheader">
-                    See and compare Live fanout queries and URLs that ChatGPT, Gemini & Perplexity refer to answer multiple queries;<br/> plus each query’s <u data-tooltip-neutral="Degree (0-100) to which an LLM relies on external sources to answer.">Citation Signal (CS)<sup>ⓘ</sup></u> — all to <strong>identify queries worth creating content around</strong>.
+                    <span class="subheader-line1">Get Live fanout queries and URLs that ChatGPT, Gemini & Perplexity</span>
+                    <span class="subheader-line2">cite to answer a query; plus <u data-tooltip-neutral="Degree (0-100) to which an LLM relies on external sources to answer.">Citation Signal (CS)<sup>ⓘ</sup></u> —</span>
+                    <span class="subheader-line3">to <strong>identify citable content topics</strong>.</span>
                 </h2>
 
 
@@ -178,6 +204,9 @@ free query analyzer for multiple llms"
                     <button type="button" id="actionBtnTop" class="analyze-btn action-btn">
                         Analyze All Queries
                     </button>
+
+                    <!-- Free notice -->
+                    <p class="free-notice" id="freeNotice">*Free. No sign-up.</p>
 
                 </div>
                 <!-- End bulk-input -->
@@ -450,7 +479,7 @@ free query analyzer for multiple llms"
                     <p class="answer">
                         Firstly, you came all this way, so thanks for your interest: If you have feedback, a feature idea, or want to collaborate, you’re welcome to reach out.
                         <br><br>
-                        Email: <a href="mailto:mayankbishwas@gmail.com">mayankbishwas@gmail.com</a>
+                        Email: <a href="/cdn-cgi/l/email-protection#2c414d554d42474e455f445b4d5f6c4b414d4540024f4341"><span class="__cf_email__" data-cfemail="f19c9088909f9a93988299869082b1969c90989ddf929e9c">[email&#160;protected]</span></a>
                         <br>
                         Linkedin: <a href="https://linkedin.com/in/mayankbishwas" target="_blank">@mayankbishwas</a>
                     </p>
@@ -472,7 +501,7 @@ free query analyzer for multiple llms"
          =========================== -->
     <footer>
         <div class="footer-left footer-nav">
-            <span class="footer-brand">QueryCat.app</span>
+            <a href="/" class="footer-brand"><b>QueryCat.app</b></a>
             <a href="/">Single Query</a>
             <a href="/llm-bulk-query-explorer">Bulk Queries</a>
         </div>
@@ -486,26 +515,14 @@ free query analyzer for multiple llms"
         <div class="footer-right">
             <a href="https://imagealtai.com/" target="_blank" rel="noopener noreferrer">Image Alt AI</a>
             <a href="/about-best-llm-query-explorer">About</a>
-            <a href="mailto:mayankbishwas@gmail.com">Contact</a>
+            <a href="/cdn-cgi/l/email-protection#ff929e869e91949d968c97889e8cbf98929e9693d19c9092">Contact</a>
         </div>
     </footer>
     <!-- End footer -->
 
-    </div>
-    <!-- End of desktop-only view -->
-
-
-    <!-- ===========================
-         MOBILE WARNING
-         =========================== -->
-    <div class="mobile-warning">
-        <div class="mobile-warning-box">
-            <h2>🖥️ Open on Desktop!</h2>
-            <p>Sorry, currently our web tool does not support mobile access; it works only on desktop.</p>
-            <p>But we're working on it, so do keep an eye out 🙂</p>
-            <p><u><em>P.S. Might work in landscape mode.</em></u></p>
-        </div>
-    </div>
+    <!-- Zoho chatbot begins -->
+     <script>window.$zoho=window.$zoho || {};$zoho.salesiq=$zoho.salesiq||{ready:function(){}}</script><script id="zsiqscript" src="https://salesiq.zohopublic.in/widget?wc=siq66ccbf0efeebf39cf591d4d29b641adf40be468ecd1114a67830482e30a85695" defer></script>
+    <!-- Zoho chatbot ends -->
 
 </body>
 </html>

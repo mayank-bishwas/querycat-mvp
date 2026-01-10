@@ -4,9 +4,13 @@
 // The Kitchen Manager (Bulk Edition): Processes 2-5 queries across all 3 LLMs.
 // Outputs a 15-column CSV with per-LLM breakdown.
 
+import 'dotenv/config';
+
+
 import { analyzeQuery as analyzeChatGPT, CONFIG } from "../lib/chatgpt.js";
 import { analyzeQuery as analyzeGemini } from "../lib/gemini.js";
 import { analyzeQuery as analyzePerplexity } from "../lib/perplexity.js";
+
 
 /* =========================
    HELPERS

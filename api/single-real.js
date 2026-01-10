@@ -6,9 +6,18 @@
 //
 // One query in → three analyses out → unified response.
 
+import 'dotenv/config';
+
 import { analyzeQuery as analyzeChatGPT, CONFIG } from "../lib/chatgpt.js";
 import { analyzeQuery as analyzeGemini } from "../lib/gemini.js";
 import { analyzeQuery as analyzePerplexity } from "../lib/perplexity.js";
+
+
+console.log("ENV CHECK:", {
+  OPENAI: process.env.OPENAI_API_KEY ? "✅" : "❌",
+  GOOGLE: process.env.GOOGLE_API_KEY ? "✅" : "❌", 
+  PERPLEXITY: process.env.PERPLEXITY_API_KEY ? "✅" : "❌"
+});
 
 /* =========================
    HELPER: Safe LLM Call
