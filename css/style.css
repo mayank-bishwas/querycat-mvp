@@ -418,16 +418,16 @@ nav {
 /* Outer box */
 .query-box {
   width: 720px;
-  height: 54px;
   margin: 0 auto;
   border: 2px dashed #dedfe0;
   border-radius: 8px;
   background: var(--whitish);
   box-shadow: 0 3px 12px #e7e7e956, inset 0 0 20px rgba(0,0,0,0.03);
-  padding: 0;  /* Remove padding or adjust height */
-  display: flex;  
-  align-items: center;  
-  cursor: text;  /*signals the box is clickable */
+  padding: 16px;
+  display: flex;  /* Add this */
+  align-items: center;  /* Add this */
+  cursor: text;  /* Add this */
+  min-height: 54px;  /* Change from height to min-height */
 }
 
 /* Hover glow */
@@ -448,6 +448,7 @@ nav {
   font-size: 14px;
   color: var(--blackish);
   background: transparent;
+  padding: 0;  /* Remove any default input padding */
 }
 
 /* Placeholder */
