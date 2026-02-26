@@ -424,7 +424,10 @@ nav {
   border-radius: 8px;
   background: var(--whitish);
   box-shadow: 0 3px 12px #e7e7e956, inset 0 0 20px rgba(0,0,0,0.03);
-  padding: 16px;
+  padding: 0;  /* Remove padding or adjust height */
+  display: flex;  
+  align-items: center;  
+  cursor: text;  /*signals the box is clickable */
 }
 
 /* Hover glow */
