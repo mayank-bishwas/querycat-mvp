@@ -448,7 +448,8 @@ nav {
   font-size: 14px;
   color: var(--blackish);
   background: transparent;
-  padding: 0;  /* Remove any default input padding */
+  padding: 0 16px;  
+  height: 100%;     
 }
 
 /* Placeholder */
@@ -1731,7 +1732,8 @@ footer::before {
   box-shadow: 0 3px 12px #e7e7e956,
               inset 0 0 20px rgba(0,0,0,0.03);
 
-  padding: 16px;
+  padding: 0 16px; 
+  height: 100%;
   position: relative;     /* CONTAINMENT */
   overflow: hidden;       /* NO SPILL */
 }
