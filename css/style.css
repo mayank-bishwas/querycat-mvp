@@ -448,7 +448,7 @@ nav {
   font-size: 14px;
   color: var(--blackish);
   background: transparent;
-  padding: 0 10px;  
+  padding: none;  
   height: 100%;     
 }
 
