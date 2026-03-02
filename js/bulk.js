@@ -11,6 +11,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const actionBtn = document.getElementById("actionBtnTop");
   const inputError = document.getElementById("inputError");
   const downloadAgainLink = document.getElementById("downloadAgain");
+  
+  const queryBox = document.querySelector(".query-box");
+queryBox.addEventListener("click", (e) => {
+  if (document.activeElement !== queryInput) {
+    queryInput.focus();
+  }
+});
+  
   const wrapper = document.querySelector(".bulk-input-wrapper");
 
   /* =========================
