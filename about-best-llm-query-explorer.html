@@ -45,17 +45,42 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
 
         <!-- Schema -->
-      <script type="application/ld+json">
 
-      {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "@id": "https://querycat.app/#website",
-        "url": "https://querycat.app",
-        "name": "QueryCat.app | LLM Query Explorer",
-        "description": "LLM Query Explorer to see what ChatGPT, Gemini, and Perplexity search and cite to answer a query."
-        }
-        </script>
+            <script type="application/ld+json">
+            {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+
+            "name": "QueryCat",
+            "url": "https://querycat.app",
+            "logo": "https://querycat.app/images/logo.png",
+            "description": "QueryCat is an AI SEO Tool that shows how ChatGPT, Gemini, and Perplexity find, interpret, and cite information when answering queries.",
+
+            "sameAs": [
+                "https://www.linkedin.com/in/mayankbishwas/",
+                "https://twitter.com/mayankbishwas"
+            ],
+
+            "contact": {
+                "@type": "ContactPoint",
+                "contactType": "Customer Support",
+                "email": "mayankbishwas@gmail.com"
+            },
+
+            "founder": {
+                "@type": "Person",
+                "name": "Mayank Bishwas"
+            },
+
+            "foundingDate": "2026",
+            "knowsAbout": [
+                "AI SEO",
+                "LLM Query Analysis",
+                "Citation Signal",
+                "Generative Engine Optimization"
+            ]
+            }
+            </script>
 
         <!-- Styles + JS -->
         <link rel="stylesheet" href="css/style.css?v=08012026-1" />
@@ -121,6 +146,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
                                 allowfullscreen>
                             </iframe>
+
+                            <script type="application/ld+json">
+                                {
+                                "@context": "https://schema.org",
+                                "@type": "VideoObject",
+                                "name": "QueryCat LLM Query Explorer Tutorial",
+                                "description": "Learn how to use QueryCat to analyze a single query and see what ChatGPT, Gemini & Perplexity cite.",
+                                "thumbnailUrl": "https://img.youtube.com/vi/hfAC3lCPoDM/maxresdefault.jpg",
+                                "uploadDate": "2026-01-03",
+                                "duration": "PT1M17S",
+                                "contentUrl": "https://www.youtube.com/watch?v=hfAC3lCPoDM",
+                                "embedUrl": "https://www.youtube.com/embed/hfAC3lCPoDM"
+                                }
+                                </script>
                         </div>
                     </div>
                 </section>
@@ -353,6 +392,112 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </div>
         </div>
     </section>
+    
+    <!-- FAQ Schema -->
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why does AI SEO need a different kind of tool?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Because AI SEO is not just SEO with new keywords. LLMs don't rank pages the way search engines do. They interpret queries, sometimes search the web, and then cite a small set of sources to build an answer. That behavior can't be understood through traditional ranking or visibility metrics. It needs a tool that shows how LLMs actually behave, not one that guesses outcomes."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why are AI visibility and prediction tools being questioned today?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Because many of them make confident claims without showing evidence. Predicting AI visibility, brand mentions, or prompt volumes sounds appealing—but when the underlying LLM behavior isn't visible, those predictions are hard to verify. Even industry experts are now calling this out, especially given their hefty price tags."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What problem does QueryCat.app solve that existing AI SEO tools don't?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Most AI SEO tools collapse complexity into dashboards and scores. QueryCat.app does the opposite—it keeps the complexity inspectable. It shows when an LLM searched the web, how it expanded a query, which sources it cited, and how those citations varied across models. That makes it possible to understand why certain queries behave differently, instead of just seeing a score."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does QueryCat.app avoid predictions, rankings, and forecasts?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Because LLMs are probabilistic systems. The same query can behave differently across models—or even across runs. Any forecast would look precise but age badly. So, we avoid that trap by focusing on observation, not prophecy. It's built to support judgment, not replace it."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does QueryCat.app ensure its insights are based on real LLM behavior?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "QueryCat.app runs real queries through real LLM APIs, not chat interfaces or simulations. It captures observable behavior such as web-search triggers, fan-out queries (direct or inferred), cited title–URL pairs, and source diversity. If something isn't observable, we don't pretend it is. That constraint is intentional."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is Citation Signal? How's it calculated?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Citation Signal is a directional metric, not a prediction. It's derived from observable LLM behavior, such as how many unique sources were cited, how diverse those sources were, and whether citations were dominated by a single source type. The idea is simple: Out of two queries, the one that triggers more citations from more varied sources is more likely to cite from multiple different sources another time. Citation Signal does not measure probability of being cited. A 100 CS does not guarantee a content on this topic will be cited. It's meant for comparison and pattern spotting, not forecasting."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How should one use insights from QueryCat.app in SEO content work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "QueryCat.app doesn't tell you what to write or how to optimize. It helps you understand which queries trigger web search, how LLMs interpret them, and what kinds of sources they rely on. Some users explore this deeply using Single Query mode. Others compare multiple ideas quickly using Bulk Queries mode. What you do with those insights is intentionally left to you."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How should QueryCat.app be used alongside other SEO tools?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Think of QueryCat.app as a research instrument. Traditional SEO tools are great for traffic, rankings, and competitive analysis. We complement them by showing how LLMs behave at the query level—something most SEO tools don't surface yet. So when strategizing and creating content, you can use both tools together for comprehensive SEO + GEO insights."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Who is QueryCat.app built for, and who is it not for?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "QueryCat.app is primarily built for frugal and practical marketers, founders, SEOs, Content freelancers and the like who are reluctant to shell out around $150 per month for existing AI Visibility Tools and want a robust evidence-based look into understanding how LLMs answer a query, to build their own AI SEO strategy. It's probably not for those looking for automated recommendations, growth hacks, or guaranteed outcomes. The tool assumes curiosity, not blind trust."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How will QueryCat.app evolve as LLMs and AI search change?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "As LLMs evolve, QueryCat.app will continue to focus on observable behavior—across more models, deeper comparisons, and better ways to study change over time. The philosophy won't change, even if the features do: honest, useful, and cheap."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will QueryCat.app remain free? Or offer high-volume in the paid plan?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "QueryCat.app cannot remain free forever because every hit on the tool costs. The plan is to keep QueryCat.app free and fairly open for the initial phase, gather feedback, and make it genuinely useful. After that, we'll introduce a freemium model, with paid plans focused on high-volume query exploration. Either way, we'll stick to real, observable LLM behavior with no black-box ai-visibility-tool tricks. If you see potential or need higher-volume, spreading the word would genuinely help."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How can users contribute feedback, ideas, or collaborations?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You can reach out via Email: mayankbishwas@gmail.com or LinkedIn: https://linkedin.com/in/mayankbishwas"
+      }
+    }
+  ]
+}
+</script>
                     
             <!-- FAQs Section ends -->
             </main>
