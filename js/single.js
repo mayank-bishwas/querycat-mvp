@@ -10,7 +10,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const queryInput = document.getElementById("queryInput");
   const actionBtn = document.getElementById("actionBtnTop");
   const inputError = document.getElementById("inputError");
-
+  
+  const queryBox = document.querySelector(".query-box");
+queryBox.addEventListener("click", (e) => {
+  if (document.activeElement !== queryInput) {
+    queryInput.focus();
+  }
+});
+  
   const resultsSection = document.getElementById("singleResultsSection");
 
   const resetBtn = document.getElementById("resetBtn");
